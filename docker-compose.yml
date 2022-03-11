@@ -1,0 +1,20 @@
+version: '3.5'
+
+services:
+  br-nuxt:
+    image: docker.pkg.github.com/xxx/nuxtapp/nuxtapp
+    restart: unless-stopped
+    networks:
+      nuxt:
+      traefik:
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.nuxt.rule=Host(`xxxxx.com`)"
+      - "traefik.http.routers.nuxt.tls.certresolver=myhttpchallenge"
+      - "traefik.http.routers.nuxt.entrypoints=websecure"
+      - "traefik.http.routers.nuxt.tls=true"
+
+networks:
+  nuxt:
+  traefik:
+    external: true
