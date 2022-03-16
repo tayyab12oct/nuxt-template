@@ -1,6 +1,7 @@
 <!-- This example requires Tailwind CSS v2.0+ -->
 <template>
   <div class="bg-white relative overflow-hidden">
+  <Title>Regionen &bull; Nautable</Title>
     <!-- Decorative background image and gradient -->
     <div aria-hidden="true" class="absolute inset-0">
       <div class="absolute inset-0 mx-auto overflow-hidden">
@@ -10,6 +11,7 @@
       <div class="absolute inset-0 bg-white bg-opacity-75"/>
       <div class="absolute inset-0 bg-gradient-to-t from-white via-white"/>
     </div>
+    <div class="py-32">dsfs sdjfs lhfs lhfs k gfs</div>
 
     <!-- Callout -->
     <section aria-labelledby="sale-heading"

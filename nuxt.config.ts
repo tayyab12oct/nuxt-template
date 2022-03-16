@@ -6,11 +6,11 @@ export default defineNuxtConfig({
 
   // Target: https://go.nuxtjs.dev/config-target
   target: "static",
-  // publicRuntimeConfig: {
-  //     APP_TOKEN: process.env.APP_TOKEN,
-  //     CTF_SPACE_ID: process.env.CTF_SPACE_ID,
-  //     CTF_CDA_ACCESS_TOKEN: process.env.CTF_CDA_ACCESS_TOKEN,
-  // },
+  publicRuntimeConfig: {
+      APP_TOKEN: process.env.APP_TOKEN,
+      CTF_SPACE_ID: process.env.CTF_SPACE_ID,
+      CTF_CDA_ACCESS_TOKEN: process.env.CTF_CDA_ACCESS_TOKEN,
+  },
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
