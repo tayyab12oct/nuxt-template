@@ -69,30 +69,121 @@
     </div>
     <div class="bg-primary">
       <div
-        class="max-w-7xl mx-auto w-full px-6 xl:px-0 py-10 grid md:grid-cols-2 grid-cols-1 gap-8"
+        class="max-w-7xl mx-auto w-full px-6 xl:px-0 lg:py-10 py-6 grid md:grid-cols-2 grid-cols-1 lg:gap-8 gap-5"
       >
         <div
-          class="bg-white rounded-lg px-6 border border-gray-100 shadow-sm flex items-center space-x-4 py-8"
+          class="bg-white rounded-lg lg:px-6 px-4 border border-gray-100 shadow-sm flex lg:flex-row md:flex-col flex-row lg:items-center md:items-start items-center lg:space-x-4 lg:py-8 py-4"
           v-for="i in foodCard"
           :key="i"
         >
           <div class="">
-            <div class="w-32">
+            <div class="lg:w-32 md:w-48 w-18">
               <img :src="i.src" class="w-full" alt="" />
             </div>
           </div>
-          <div class="pb-12">
-            <h1 class="text-gray-300 font-semibold text-2xl pb-2">
+          <div
+            class="lg:pb-12 md:pb-16 md:pt-4 lg:pt-0 pl-5 md:pl-0 max-w-xs text-ellipsis overflow-hidden whitespace-nowrap md:whitespace-normal md:max-w-full"
+          >
+            <h1
+              class="text-gray-300 font-semibold lg:text-2xl md:text-xl text-base md:pb-2 pb-4"
+            >
               {{ i.title }}
             </h1>
-            <p class="text-gray-300 text-base">
+            <p
+              class="text-gray-300 lg:text-base md:text-sm text-xs font-light md:font-normal"
+            >
               {{ i.text }}
             </p>
+          </div>
+          <div class="md:hidden">
+            <div class="flex items-center justify-end w-10 pr-2">
+              <ChevronRightIcon class="w-5" />
+            </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="bg-gray-200 p-2"></div>
+    <div class="py-20 lg:py-0 relative overflow-hidden">
+      <div
+        class="z-30 lg:absolute w-full h-full top-0 left-0 flex items-center"
+      >
+        <div
+          class="max-w-7xl mx-auto w-full px-6 xl:px-0 flex items-center lg:-mt-0.5"
+        >
+          <div
+            class="bg-white rounded-lg border border-gray-100 lg:-mt-24 md:p-10 p-4 shadow-sm lg:px-20 md:px-16 max-w-3xl ml-auto"
+          >
+            <h1
+              class="lg:text-3xl text-3xl pb-4 lg:leading-[48px] text-gray-300 font-light tracking-wide"
+            >
+              Pharmaceutical and Health
+            </h1>
+            <p
+              class="border-t border-secondary pt-4 pb-3 lg:text-lg text-base text-gray-300 font-light"
+            >
+              The urgent temperature-controlled transport solution for the
+              pharmaceutical and healthcare industry. We offer maximum
+              reliability, and guarantee the safety and security conditions of
+              your products. Correos aims to be the ideal logistics partner for
+              the healthcare sector.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="lg:grid grid-cols-2 items-end py-20 w-full h-full hidden">
+        <img
+          src="@/assets/images/med.jpg"
+          alt=""
+          class="h-96 w-full rounded-lg"
+        />
+        <div class="lg:flex items-end justify-end hidden">
+          <img src="@/assets/images/deco_03.svg" alt="" class="-mr-30" />
+        </div>
+      </div>
+    </div>
+    <div class="bg-gray-200">
+      <SpecificSolution :list="list1" />
+    </div>
+    <div class="py-20 lg:py-0 relative overflow-hidden">
+      <div
+        class="z-30 lg:absolute w-full h-full -top-1.5 left-0 flex items-center"
+      >
+        <div
+          class="max-w-7xl mx-auto w-full px-6 xl:px-0 flex items-center lg:-mt-12"
+        >
+          <div
+            class="bg-white rounded-lg border border-gray-100 lg:-mt-24 md:p-10 p-4 shadow-sm lg:px-32 md:px-16 max-w-4xl"
+          >
+            <h1
+              class="lg:text-3xl text-3xl pb-4 lg:leading-[48px] text-gray-300 font-light tracking-wide"
+            >
+              Food
+            </h1>
+            <p
+              class="border-t border-secondary pt-4 pb-3 lg:text-lg text-base text-gray-300 font-light"
+            >
+              We guarantee the quality of your fresh products thanks to the
+              transportation solutions Correos Frío offers your business.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div
+        class="lg:grid grid-cols-2 items-end py-20 pr-6 w-full h-full hidden"
+      >
+        <div class="lg:flex items-end hidden">
+          <img src="@/assets/images/deco_03.svg" alt="" class="-ml-30" />
+        </div>
+        <img
+          src="@/assets/images/store.jpg"
+          alt=""
+          class="h-96 w-full rounded-lg"
+        />
+      </div>
+    </div>
+    <div class="bg-gray-200">
+      <SpecificSolution :list="list2" />
+    </div>
     <div
       class="max-w-7xl mx-auto w-full px-6 xl:px-0 md:py-22 md:pb-32 pt-10 pb-20 grid lg:grid-cols-3 md:grid-cols-5 grid-cols-1 lg:gap-20 md:gap-8 gap-2 lg:pr-10"
     >
@@ -184,11 +275,13 @@
 </template>
 <script>
 import Button from "../components/Button";
+import SpecificSolution from "../components/SpecificSolution";
 import { ChevronRightIcon } from "@heroicons/vue/outline";
 export default {
   components: {
     Button,
     ChevronRightIcon,
+    SpecificSolution,
   },
   data() {
     return {
@@ -220,6 +313,85 @@ export default {
           src: "assets/images/alimentacion.svg",
           title: "Food",
           text: "We transport your fresh products in a controlled temperature to guarantee their quality from the point of origin to the destination.",
+        },
+      ],
+      list1: [
+        {
+          src: "assets/images/cold_chain.svg",
+          title: "Cold Chain",
+          text: "Our leadership in logistics and the latest technology on the market are combined in the Coldchain service. Designed especially for laboratories and distributors who need to deliver their products to hospitals, clinics, and medical centres:",
+          list: [
+            { text: "We offer an urgent transportation solution (B2B)." },
+            {
+              text: "Delivery of pharmaceutical products: medicines, vaccines and samples.",
+            },
+            { text: "We provide sensorised insulated shipping boxes." },
+            {
+              text: "We monitor temperature, humidity and impacts on your deliveries in real time.",
+            },
+          ],
+        },
+        {
+          src: "assets/images/farmacia_hospitalaria.svg",
+          title: "Hospital Pharmacy",
+          text: "Proximity, safety and guarantee are combined in our Hospital Pharmacy delivery service. Especially designed for hospitals and clinics that need to deliver their medications and healthcare products to patients at home:",
+          list: [
+            {
+              text: "Collection from the Hospital and delivery to the patient’s home on the same day.",
+            },
+            {
+              text: "Delivery of medications and products from the hospital pharmacy.",
+            },
+            {
+              text: "We use insulated shipping boxes and/or insulated vehicles for their transport.",
+            },
+            { text: "Technological platform for managing your deliveries." },
+          ],
+        },
+      ],
+      list2: [
+        {
+          src: "assets/images/cold_chain.svg",
+          title: "Wholesale Distribution",
+          text: "Focus on increasing your sales and growing your business. Correos will take care of your logistics:",
+          list: [
+            {
+              text: "We pick up your products at the wholesale market or your warehouse.",
+            },
+            {
+              text: "We deliver to retail shops, collectives and hospitality establishments.",
+            },
+            { text: "Home delivery of perishable products." },
+            {
+              text: "We offer a fleet of insulated and refrigerated vehicles.",
+            },
+          ],
+        },
+        {
+          src: "assets/images/farmacia_hospitalaria.svg",
+          title: "Last-Mile Services",
+          text: "Your fresh products arrive in perfect condition at your customers’ homes, with the last-mile delivery service designed to ensure fast, safe, refrigerated delivery:",
+          list: [
+            { text: "We collect items and deliver them the same day." },
+            { text: "The ideal solution for retail shops and food markets." },
+            { text: "Home delivery of perishable products." },
+            { text: "We use insulated shipping boxes and special vehicles." },
+          ],
+        },
+        {
+          src: "assets/images/farmacia_hospitalaria.svg",
+          title: "E-commerce and Gourmet",
+          text: "If you sell online and need a temperature-controlled transport solution that guarantees the quality of your products, wherever your customer may be, this is the service you’re looking for:",
+          list: [
+            { text: "We offer urgent deliveries: Where and when you want." },
+            {
+              text: "We deliver your product anywhere in Spain, mainland Portugal, and Andorra.",
+            },
+            {
+              text: "We use insulated shipping boxes to conserve and protect your products.",
+            },
+            { text: "We have different types of integrated technology." },
+          ],
         },
       ],
     };
