@@ -1,7 +1,7 @@
 <template>
   <button
     :type="type"
-    class="flex justify-center text-center rounded-lg focus:outline-none"
+    class="flex justify-center text-center rounded-lg focus:outline-none transition-all"
     :class="`${mainClass} ${width}`"
   >
     {{ value }}

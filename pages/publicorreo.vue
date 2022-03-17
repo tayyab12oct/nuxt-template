@@ -57,17 +57,16 @@
         :key="v.title"
       >
         <div
-          v-if="0"
-          class="md:h-full h-38 border w-full overflow-hidden md:col-span-5 lg:col-span-1 bg-cover bg-no-repeat bg-center"
-          :style="{ background: url(`${v.src}`) }"
+          class="md:h-full h-38 w-full overflow-hidden md:col-span-5 lg:col-span-1 bg-cover bg-no-repeat bg-center"
+          v-bind:style="{ backgroundImage: 'url(' + v.src + ')' }"
         ></div>
-        <div class="md:h-full h-38 overflow-hidden md:col-span-5 lg:col-span-1">
+        <!-- <div class="md:h-full h-38 overflow-hidden md:col-span-5 lg:col-span-1">
           <img
             :src="v.src"
             class="w-full md:h-full md:w-auto -mt-10 md:mt-0"
             alt=""
           />
-        </div>
+        </div> -->
         <div
           class="lg:p-10 lg:px-16 md:pt-12 md:p-6 p-4 md:col-span-7 lg:col-span-1"
         >
