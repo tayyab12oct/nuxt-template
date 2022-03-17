@@ -7,21 +7,13 @@
         Track your order
       </h1>
       <div class="flex items-center lg:space-x-6 md:space-x-3 space-x-2">
-        <div
-          class="border border-gray-900 border-b-0 rounded-t-lg group w-full bg-white transition-all"
-        >
-          <label
-            for="name"
-            class="block text-xs px-4 md:pt-1.5 pt-1 font-medium text-primary"
-            >Item tracking no.*</label
-          >
-          <input
-            type="text"
-            name="name"
-            id="name"
-            class="block w-full px-4 pb-1 md:text-base text-sm border-b-2 border-0 border-transparent group-hover:border-secondary p-0 text-gray-300 placeholder-gray-300 focus:outline-none focus:border-primary ring-0"
-          />
-        </div>
+        <Input
+          label="Item tracking no.*"
+          type="text"
+          id="tracking"
+          mainClass="bg-white"
+          placeholder="Item tracking no.*"
+        />
         <Button
           value="search"
           mainClass="bg-primary hover:bg-blue-200 text-white lg:text-base text-sm uppercase font-bold py-3.5 lg:px-6 px-5 w-44"
@@ -41,11 +33,13 @@
   </div>
 </template>
 <script>
+import Input from "../Input";
 import Button from "../Button";
 import { ChevronRightIcon } from "@heroicons/vue/outline";
 export default {
   props: ["cards"],
   components: {
+    Input,
     Button,
     ChevronRightIcon,
   },

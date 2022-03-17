@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="overflow-x-hidden">
     <div
       class="bg-white border-0 relative grid lg:grid-cols-2 md:grid-cols-5 grid-cols-1"
     >
@@ -55,11 +55,11 @@
         ></path>
       </svg>
     </div>
-    <div class="md:-mt-6 relative px-6 xl:px-0">
+    <div class="md:-mt-6 pt-5 md:pt-0 relative px-6 xl:px-0">
       <TrackOrder />
     </div>
     <div
-      class="max-w-7xl mx-auto w-full px-4 lg:py-10 xl:px-0 md:px-6 md:pt-8 pb-6 pt-4"
+      class="max-w-7xl mx-auto w-full px-6 lg:py-10 xl:px-0 md:pt-8 pb-6 pt-4"
     >
       <h1 class="text-gray-300 lg:text-4xl text-2xl lg:py-10 pb-10">
         We want to offer you the services your business needs
@@ -73,34 +73,46 @@
         No matter how big or small your company, we know we can help you.
       </p>
 
-      <div class="grid grid-cols-2 gap-8 max-w-6xl px-7 mx-auto">
-        <div class="space-y-4">
-          <p class="text-gray-300 lg:text-lg text-base font-light">
-            Please leave your details and we will contact you as soon as
-            possible.
-          </p>
-          <div
-            class="border border-gray-900 border-b-0 rounded-t-lg group w-full bg-gray-200 transition-all"
-          >
-            <label
-              for="name"
-              class="block text-xs px-4 md:pt-1.5 pt-1 font-medium text-primary"
-              >Item tracking no.*</label
-            >
-            <input
-              type="text"
-              name="name"
-              id="name"
-              class="block w-full px-4 pb-1 md:text-base text-sm bg-transparent border-b-2 border-0 border-transparent group-hover:border-secondary p-0 text-gray-300 placeholder-gray-300 focus:outline-none focus:border-primary ring-0"
-            />
-          </div>
-        </div>
-
-        <div class="px-6 flex justify-end">
+      <div
+        class="grid lg:grid-cols-2 md:grid-cols-5 grid-cols-1 gap-8 items-start lg:max-w-6xl max-w-2xl lg:px-7 md:px-4 mx-auto"
+      >
+        <div
+          class="lg:px-6 px-14 md:p-0 flex justify-end md:col-span-2 lg:col-span-1 md:order-1"
+        >
           <img
             src="@/assets/images/deberiás_saber.svg"
             alt=""
             class="max-w-sm w-full"
+          />
+        </div>
+        <div class="space-y-5 md:col-span-3 lg:col-span-1 md:order-0">
+          <p class="text-gray-300 lg:text-lg text-base font-light">
+            Please leave your details and we will contact you as soon as
+            possible.
+          </p>
+          <Input
+            v-for="v in fields"
+            :key="v"
+            :label="v.label"
+            :type="v.type"
+            :id="v.id"
+            mainClass="bg-gray-200"
+            :placeholder="v.label"
+          />
+          <Select />
+          <div class="pb-7">
+            <Checkbox
+              id="test"
+              text="I have read and accept the"
+              linkText="Data Protection Policy."
+            />
+          </div>
+          <hr class="border-gray-900" />
+          <OfferPromotion />
+          <Button
+            value="Enviar"
+            mainClass="bg-gray-200 text-gray-300 border border-gray-900 lg:text-base text-sm uppercase font-bold md;py-4 py-3 lg:px-8 px-6 text-opacity-50"
+            width="md:w-auto w-full"
           />
         </div>
       </div>
@@ -282,14 +294,22 @@
   </div>
 </template>
 <script>
+import Input from "../components/Input";
+import Select from "../components/Select";
 import Button from "../components/Button";
+import Checkbox from "../components/Checkbox";
+import OfferPromotion from "../components/OfferPromotion";
 import CompainsCard from "../components/CompainsCard";
 import TrackOrder from "../components/TrackOrder";
 import { ChevronRightIcon } from "@heroicons/vue/outline";
 export default {
   components: {
+    Input,
+    Select,
     Button,
+    Checkbox,
     CompainsCard,
+    OfferPromotion,
     TrackOrder,
     ChevronRightIcon,
   },
@@ -312,6 +332,14 @@ export default {
           title: "Specialised vehicle fleet",
           desc: "Our fleet of insulated and refrigerated vehicles is especially designed to guarantee control and maintenance of the cold chain for your deliveries.",
         },
+      ],
+      fields: [
+        { id: "companyName", type: "text", label: "Company name*" },
+        { id: "cif", type: "text", label: "CIF*" },
+        { id: "name", type: "text", label: "Contact name" },
+        { id: "number", type: "text", label: "Mobile phone*" },
+        { id: "email", type: "email", label: "Email address*" },
+        { id: "category", type: "select", label: "Select product category" },
       ],
       cards1: [
         {
