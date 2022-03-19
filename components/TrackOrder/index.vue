@@ -1,6 +1,6 @@
 <template>
   <div
-    class="max-w-7xl bg-secondary rounded-lg shadow-sm mx-auto w-full px-4 lg:py-6 md:pt-8 pb-6 pt-4 grid md:grid-cols-2 grid-cols-1 lg:gap-8 gap-6"
+    class="max-w-7xl relative z-10 bg-secondary rounded-lg shadow-sm mx-auto w-full px-4 lg:py-6 md:pt-8 pb-6 pt-4 grid md:grid-cols-2 grid-cols-1 lg:gap-8 gap-6"
   >
     <div class="">
       <h1 class="text-gray-300 md:text-2xl text-lg md:pb-3 pb-1">

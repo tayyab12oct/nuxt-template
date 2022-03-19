@@ -1,162 +1,218 @@
 <template>
-  <footer class="bg-gray-800" aria-labelledby="footer-heading">
-    <h2 id="footer-heading" class="sr-only">Footer</h2>
-    <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-16 xl:px-0">
-      <div class="xl:grid xl:grid-cols-3 xl:gap-8">
-        <div class="grid grid-cols-2 gap-8 xl:col-span-2">
-          <div class="md:grid md:grid-cols-2 md:gap-8">
-            <div>
-              <h3
-                class="text-sm font-semibold text-gray-400 tracking-wider uppercase"
-              >
-                Solutions
-              </h3>
-              <ul role="list" class="mt-4 space-y-4">
-                <li v-for="item in navigation.solutions" :key="item.name">
-                  <a
-                    :href="item.href"
-                    class="text-base text-gray-300 hover:text-white"
-                  >
-                    {{ item.name }}
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <div class="mt-12 md:mt-0">
-              <h3
-                class="text-sm font-semibold text-gray-400 tracking-wider uppercase"
-              >
-                Support
-              </h3>
-              <ul role="list" class="mt-4 space-y-4">
-                <li v-for="item in navigation.support" :key="item.name">
-                  <a
-                    :href="item.href"
-                    class="text-base text-gray-300 hover:text-white"
-                  >
-                    {{ item.name }}
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div class="md:grid md:grid-cols-2 md:gap-8">
-            <div>
-              <h3
-                class="text-sm font-semibold text-gray-400 tracking-wider uppercase"
-              >
-                Company
-              </h3>
-              <ul role="list" class="mt-4 space-y-4">
-                <li v-for="item in navigation.company" :key="item.name">
-                  <a
-                    :href="item.href"
-                    class="text-base text-gray-300 hover:text-white"
-                  >
-                    {{ item.name }}
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <div class="mt-12 md:mt-0">
-              <h3
-                class="text-sm font-semibold text-gray-400 tracking-wider uppercase"
-              >
-                Legal
-              </h3>
-              <ul role="list" class="mt-4 space-y-4">
-                <li v-for="item in navigation.legal" :key="item.name">
-                  <a
-                    :href="item.href"
-                    class="text-base text-gray-300 hover:text-white"
-                  >
-                    {{ item.name }}
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div class="mt-8 xl:mt-0">
-          <h3
-            class="text-sm font-semibold text-gray-400 tracking-wider uppercase"
+  <footer class="bg-white shadow lg:pt-12" aria-labelledby="footer-heading">
+    <div class="max-w-7xl mx-auto py-10 px-6 xl:px-0">
+      <Disclosure
+        as="div"
+        class="focus:outline-none lg:hidden"
+        v-for="v in navigate"
+        :key="v"
+        v-slot="{ open }"
+      >
+        <h3 class="border-b border-gray-100 bg-white focus:outline-none">
+          <DisclosureButton
+            class="focus:outline-none group relative w-full py-4 flex justify-between items-center text-left"
           >
-            Subscribe to our newsletter
+            <span
+              v-if="v.title"
+              class="lg:text-2xl md:text-xl text-base lg:font-light text-gray-300"
+            >
+              {{ v.title }}
+            </span>
+            <img :src="v.img" alt="" class="lg:w-9 md:w-7 w-6" v-else />
+            <span class="ml-6 flex items-center">
+              <ChevronDownIcon
+                :class="[
+                  open ? '-rotate-180' : 'rotate-0',
+                  'h-5 w-5 transform transition-all text-primary',
+                ]"
+                aria-hidden="true"
+              />
+            </span>
+          </DisclosureButton>
+          <DisclosurePanel
+            as="div"
+            class="pb-6 md:pr-10 pr-5 text-sm md:taxt-base lg:font-light text-gray-300 transform transition-all"
+          >
+            <ul role="list" class="mt-2 space-y-6">
+              <li v-for="item in v.list" :key="item.name">
+                <a
+                  :href="item.href"
+                  class="md:text-base text-sm text-primary hover:underline"
+                >
+                  {{ item.name }}
+                </a>
+              </li>
+            </ul>
+          </DisclosurePanel>
+        </h3>
+      </Disclosure>
+      <div class="lg:grid md:grid-cols-4 md:gap-8 hidden">
+        <div v-for="v in navigate" :key="v">
+          <h3 class="text-2xl font-light text-gray-300" v-if="v.title">
+            {{ v.title }}
           </h3>
-          <p class="mt-4 text-base text-gray-300">
-            The latest news, articles, and resources, sent to your inbox weekly.
-          </p>
-          <form class="mt-4 sm:flex sm:max-w-md">
-            <label for="email-address" class="sr-only">Email address</label>
-            <input
-              type="email"
-              name="email-address"
-              id="email-address"
-              autocomplete="email"
-              required=""
-              class="appearance-none min-w-0 w-full bg-white border border-transparent rounded-md py-2 px-4 text-base text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white focus:border-white focus:placeholder-gray-400"
-              placeholder="Enter your email"
-            />
-            <div class="mt-3 rounded-md sm:mt-0 sm:ml-3 sm:flex-shrink-0">
-              <button
-                type="submit"
-                class="w-full bg-indigo-500 border border-transparent rounded-md py-2 px-4 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-indigo-500"
+          <img :src="v.img" alt="" class="lg:w-9 w-7" v-else />
+          <ul role="list" class="mt-6 space-y-6">
+            <li v-for="item in v.list" :key="item.name">
+              <a
+                :href="item.href"
+                class="text-base text-primary hover:underline"
               >
-                Subscribe
-              </button>
-            </div>
-          </form>
+                {{ item.name }}
+              </a>
+            </li>
+          </ul>
+          <div class="flex space-x-6 mt-6" v-if="v.social">
+            <a
+              v-for="item in navigation.social"
+              :key="item.name"
+              :href="item.href"
+              class="text-primary"
+            >
+              <span class="sr-only">{{ item.name }}</span>
+              <component :is="item.icon" class="h-5 w-5" aria-hidden="true" />
+            </a>
+          </div>
         </div>
       </div>
+      <div class="flex space-x-6 mt-6 lg:hidden">
+        <a
+          v-for="item in navigation.social"
+          :key="item.name"
+          :href="item.href"
+          class="text-primary"
+        >
+          <span class="sr-only">{{ item.name }}</span>
+          <component :is="item.icon" class="h-5 w-5" aria-hidden="true" />
+        </a>
+      </div>
       <div
-        class="mt-8 border-t border-gray-700 pt-8 md:flex md:items-center md:justify-between"
+        class="lg:mt-10 lg:border-t lg:border-gray-100 pt-10 md:flex md:items-center md:justify-between"
       >
-        <div class="flex space-x-6 md:order-2">
-          <a
-            v-for="item in navigation.social"
-            :key="item.name"
-            :href="item.href"
-            class="text-gray-400 hover:text-gray-300"
-          >
-            <span class="sr-only">{{ item.name }}</span>
-            <component :is="item.icon" class="h-6 w-6" aria-hidden="true" />
-          </a>
+        <div class="grid lg:grid-cols-8 lg:gap-7 md:gap-4 gap-2 w-full">
+          <div class="lg:col-span-3 pr-10">
+            <p class="text-gray-300 font-light">Download the Correos app</p>
+            <div
+              class="grid lg:grid-cols-3 md:grid-cols-5 grid-cols-2 gap-4 py-4"
+            >
+              <img
+                :src="v.src"
+                class="lg:h-10 md:h-9 w-full"
+                v-for="v in navigation.apps"
+                :key="v.src"
+              />
+            </div>
+          </div>
+          <div class="lg:col-span-3">
+            <p class="text-gray-300 font-light">Payment methods</p>
+            <div class="flex gap-4 py-4">
+              <div
+                class="border border-gray-100 shadow-md rounded h-8 w-12 p-1"
+                v-for="v in navigation.payments"
+                :key="v.src"
+              >
+                <img :src="v.src" class="h-full w-full" />
+              </div>
+            </div>
+          </div>
+          <div class="lg:col-span-2">
+            <p class="text-gray-300 font-light pb-4">Registered Deliveries</p>
+            <img src="@/assets/images/w3c.svg" class="h-6" />
+          </div>
         </div>
-        <p class="mt-8 text-base text-gray-400 md:mt-0 md:order-1">
-          &copy; 2020 Workflow, Inc. All rights reserved.
-        </p>
+      </div>
+    </div>
+    <div class="bg-gray-300">
+      <div
+        class="max-w-7xl w-full mx-auto lg:py-6 md:py-3 py-6 px-6 xl:px-0 md:flex items-center lg:space-x-8 md:space-x-6 space-y-5 md:space-y-0 font-light"
+      >
+        <NuxtLink to="/" class="flex">
+          <img
+            class="h-8 w-auto sm:h-10"
+            src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
+            alt=""
+          />
+        </NuxtLink>
+        <div class="space-y-2">
+          <ul
+            role="list"
+            class="lg:space-x-12 md:space-x-3 space-y-4 md:space-y-0 md:flex"
+          >
+            <li v-for="item in navigation.legal" :key="item.name">
+              <a
+                :href="item.href"
+                class="lg:text-base text-xs text-white hover:underline"
+              >
+                {{ item.name }}
+              </a>
+            </li>
+          </ul>
+          <p class="pt-3 lg:text-sm text-xs text-gray-100 md:pt-0">
+            ©Sociedad Estatal Correos y Telegrafos, S.A., S.M.E. All rights
+            reserved.
+          </p>
+        </div>
       </div>
     </div>
   </footer>
 </template>
 
 <script>
+import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/vue";
+import { ChevronDownIcon } from "@heroicons/vue/outline";
 import { defineComponent, h } from "vue";
-
+const navigate = [
+  {
+    title: "For you",
+    list: [
+      { name: "Tracking an item", href: "#" },
+      { name: "Receive", href: "#" },
+      { name: "Send", href: "#" },
+    ],
+  },
+  {
+    title: "For your business",
+    list: [
+      { name: "Send", href: "#" },
+      { name: "e-Commerce", href: "#" },
+      { name: "Marketing", href: "#" },
+    ],
+  },
+  {
+    title: "Of interest for you",
+    list: [
+      { name: "Philately", href: "#" },
+      { name: "Correos Market", href: "#" },
+      { name: "Institutional website", href: "#" },
+    ],
+  },
+  {
+    img: "assets/images/head-phone.png",
+    list: [
+      { name: "Customer Service", href: "#" },
+      { name: "Find your Post Office", href: "#" },
+    ],
+    social: true,
+  },
+];
 const navigation = {
-  solutions: [
-    { name: "Marketing", href: "#" },
-    { name: "Analytics", href: "#" },
-    { name: "Commerce", href: "#" },
-    { name: "Insights", href: "#" },
+  apps: [
+    { src: "assets/images/apple_store.jpg" },
+    { src: "assets/images/google_play.jpg" },
+    { src: "assets/images/huawei.svg" },
   ],
-  support: [
-    { name: "Pricing", href: "#" },
-    { name: "Documentation", href: "#" },
-    { name: "Guides", href: "#" },
-    { name: "API Status", href: "#" },
-  ],
-  company: [
-    { name: "About", href: "#" },
-    { name: "Blog", href: "#" },
-    { name: "Jobs", href: "#" },
-    { name: "Press", href: "#" },
-    { name: "Partners", href: "#" },
+  payments: [
+    { src: "assets/images/mastercard.svg" },
+    { src: "assets/images/paypal.svg" },
+    { src: "assets/images/maestro.svg" },
+    { src: "assets/images/visa.svg" },
   ],
   legal: [
-    { name: "Claim", href: "#" },
-    { name: "Privacy", href: "#" },
-    { name: "Terms", href: "#" },
+    { name: "Cookies policy", href: "#" },
+    { name: "Legal notice", href: "#" },
+    { name: "Privacy policy", href: "#" },
+    { name: "Security alert", href: "#" },
+    { name: "Accessibility", href: "#" },
   ],
   social: [
     {
@@ -231,9 +287,16 @@ const navigation = {
 };
 
 export default {
+  components: {
+    Disclosure,
+    DisclosureButton,
+    DisclosurePanel,
+    ChevronDownIcon,
+  },
   setup() {
     return {
       navigation,
+      navigate,
     };
   },
 };
