@@ -103,7 +103,7 @@
               />
             </div>
           </div>
-          <div class="lg:col-span-3">
+          <div class="lg:col-span-2">
             <p class="text-gray-300 font-light">Payment methods</p>
             <div class="flex gap-4 py-4">
               <div
@@ -115,9 +115,36 @@
               </div>
             </div>
           </div>
-          <div class="lg:col-span-2">
-            <p class="text-gray-300 font-light pb-4">Registered Deliveries</p>
-            <img src="@/assets/images/w3c.svg" class="h-6" />
+          <div class="lg:col-span-3">
+            <p class="text-gray-300 font-light pb-2">
+              Subscribe to our newsletter
+            </p>
+            <p class="md:text-sm text-xs text-gray-300 font-light">
+              The latest news, articles, and resources, sent to your inbox
+              weekly.
+            </p>
+            <form class="mt-4 flex items-center space-x-3">
+              <Input
+                label="Enter your email"
+                type="email"
+                name="email-address"
+                id="email-address"
+                autocomplete="email"
+                required=""
+                mainClass="bg-gray-200"
+                placeholder="Enter your email"
+              />
+              <!-- <input
+                type="email"
+                name="email-address"
+                id="email-address"
+                autocomplete="email"
+                required=""
+                class="appearance-none min-w-0 w-full bg-white border border-transparent rounded-md py-2 px-4 text-base text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white focus:border-white focus:placeholder-gray-400"
+                placeholder="Enter your email"
+              /> -->
+              <Button value="Subscribe" />
+            </form>
           </div>
         </div>
       </div>
@@ -161,6 +188,8 @@
 import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/vue";
 import { ChevronDownIcon } from "@heroicons/vue/outline";
 import { defineComponent, h } from "vue";
+import Button from "../Button";
+import Input from "../Input";
 const navigate = [
   {
     title: "For you",
@@ -292,6 +321,8 @@ export default {
     DisclosureButton,
     DisclosurePanel,
     ChevronDownIcon,
+    Button,
+    Input,
   },
   setup() {
     return {
