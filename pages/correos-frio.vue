@@ -1,7 +1,9 @@
 <template>
   <div>
+    <Title>Correos Frío</Title>
+    <meta name="description" content="" />
     <div
-      class="bg-gray-200 relative grid lg:grid-cols-2 md:grid-cols-5 grid-cols-1"
+      class="bg-gray-200 mt-20 relative grid lg:grid-cols-2 md:grid-cols-5 grid-cols-1"
     >
       <div
         class="relative bg-center bg-cover bg-no-repeat md:h-full h-44 md:col-span-2 lg:col-span-1"
@@ -20,7 +22,7 @@
         </svg>
       </div>
       <div
-        class="md:py-16 py-6 px-6 md:px-12 xl:px-0 max-w-xl mx-auto w-full md:col-span-3 lg:col-span-1"
+        class="md:py-16 py-6 px-6 md:px-12 lg:pb-24 xl:px-0 max-w-xl mx-auto w-full md:col-span-3 lg:col-span-1"
       >
         <h3 class="text-gray-300 font-bold lg:text-sm text-xs">
           Controlled temperature transport solutions

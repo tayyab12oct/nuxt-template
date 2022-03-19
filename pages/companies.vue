@@ -1,7 +1,12 @@
 <template>
   <div class="overflow-x-hidden">
+    <Title>Welcome to Correos.es - The Online Portal of Correos </Title>
+    <meta
+      name="description"
+      content="Localiza tu envío, una oficina o cualquier código postal. Información sobre todos nuestros productos y servicios. Contratación online. "
+    />
     <div
-      class="bg-white border-0 relative grid lg:grid-cols-2 md:grid-cols-5 grid-cols-1"
+      class="bg-white border-0 mt-20 relative grid lg:grid-cols-2 md:grid-cols-5 grid-cols-1"
     >
       <div
         class="relative bg-center bg-cover bg-no-repeat md:h-full h-38 md:col-span-2 lg:col-span-1"

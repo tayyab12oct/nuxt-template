@@ -1,18 +1,21 @@
 <template>
   <div>
-    <GlobalHeader/>
+    <GlobalHeader />
     <NuxtPage />
-    <GlobalFooter/>
+    <GlobalFooter />
   </div>
 </template>
 <script>
 export default {
-  setup () {
+  setup() {
     useMeta({
       meta: [
-        { name: 'viewport', content: 'width=device-width, initial-scale=1, maximum-scale=1' }
+        {
+          name: "viewport",
+          content: "width=device-width, initial-scale=1, maximum-scale=1",
+        },
       ],
-    })
-  }
-}
+    });
+  },
+};
 </script>

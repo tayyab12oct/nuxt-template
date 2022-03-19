@@ -1,8 +1,10 @@
 <!-- This example requires Tailwind CSS v2.0+ -->
 <template>
-  <Popover class="relative bg-white">
+  <Popover
+    class="fixed top-0 left-0 w-full z-50 bg-white border-t-8 border-secondary shadow-sm"
+  >
     <div
-      class="absolute inset-0 shadow z-30 pointer-events-none"
+      class="absolute inset-0 shadow-sm z-30 pointer-events-none"
       aria-hidden="true"
     />
     <div class="relative z-20 overflow-hidden">
