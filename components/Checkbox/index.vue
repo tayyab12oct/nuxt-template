@@ -21,7 +21,7 @@
       <label
         :htmlFor="id"
         value="{value}"
-        class="md:pl-4 pl-3 text-gray-300 font-light text-sm lg:text-base"
+        class="md:pl-4 pl-3 text-gray-300 font-light text-sm lg:text-base cursor-pointer"
         >{{ text }}
         <span v-if="linkText" class="underline text-primary font-medium"
           ><router-link to="">{{ linkText }}</router-link>
