@@ -38,15 +38,15 @@
           <div class="hidden lg:flex lg:space-x-10 space-x-8">
             <NuxtLink
               to="/individual"
-              class="text-base border-b border-transparent px-1 py-1.5 text-primary transition-all"
+              class="text-base border-b border-transparent px-1 py-1.5 text-primary transition-all flex items-center space-x-2"
             >
-              Individual
+              <HomeIcon class="w-5" /> <span>Individual</span>
             </NuxtLink>
             <NuxtLink
               to="/companies"
-              class="text-base border-b border-transparent px-1 py-1.5 text-primary transition-all"
+              class="text-base border-b border-transparent px-1 py-1.5 text-primary transition-all flex items-center space-x-2"
             >
-              Company
+              <LocationMarkerIcon class="w-5" /> <span>Company</span>
             </NuxtLink>
           </div>
           <div class="flex items-center lg:space-x-4 space-x-3">
@@ -391,6 +391,7 @@ import {
   ShoppingCartIcon,
   QuestionMarkCircleIcon,
   NewspaperIcon,
+  LocationMarkerIcon,
 } from "@heroicons/vue/outline";
 import { ChevronRightIcon } from "@heroicons/vue/solid";
 
@@ -418,6 +419,7 @@ export default {
     ShoppingCartIcon,
     QuestionMarkCircleIcon,
     NewspaperIcon,
+    LocationMarkerIcon,
   },
   data() {
     return {
