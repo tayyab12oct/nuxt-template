@@ -130,9 +130,10 @@
             >
               <template v-for="item in individual" :key="item.name">
                 <div v-if="!item.children" :class="item.mainClass">
-                  <a
-                    href="#"
-                    class="group text-primary w-full flex items-center hover:underline"
+                  <NuxtLink
+                    @click="openMenu"
+                    :to="item.href"
+                    class="group cursor-pointer text-primary w-full flex items-center hover:underline"
                   >
                     <div class="w-10">
                       <component
@@ -142,7 +143,7 @@
                       />
                     </div>
                     {{ item.name }}
-                  </a>
+                  </NuxtLink>
                 </div>
                 <Disclosure as="div" v-else v-slot="{ open }">
                   <DisclosureButton
@@ -190,38 +191,39 @@
                           v-for="subItem in item.children"
                           :key="subItem.name"
                         >
-                          <a
+                          <NuxtLink
                             v-if="subItem.name"
-                            href="#"
-                            class="text-primary w-full flex items-center justify-between text-lg font-medium py-3"
+                            :to="subItem.href"
+                            class="text-primary hover:underline w-full flex items-center justify-between text-lg font-medium py-3"
                           >
                             <span>{{ subItem.name }}</span>
                             <ChevronRightIcon
                               class="flex-shrink-0 h-6 w-6 text-primary"
                               aria-hidden="true"
                             />
-                          </a>
+                          </NuxtLink>
                           <ul v-for="v in subItem.list" :key="v.name">
                             <li>
-                              <a
-                                href="#"
+                              <NuxtLink
+                                :to="v.href"
                                 class="text-primary w-full flex items-center justify-between text-base py-3 font-medium border-t border-gray-900"
+                                :class="v.icon ? 'hover:underline' : ''"
                               >
-                                <span>{{ v.name }}</span>
+                                <span>{{ v.name }} tect</span>
                                 <ChevronRightIcon
                                   v-if="v.icon"
                                   class="flex-shrink-0 h-6 w-6 text-primary"
                                   aria-hidden="true"
                                 />
-                              </a>
+                              </NuxtLink>
                               <ul>
                                 <li v-for="a in v.subList" :key="a.name">
-                                  <a
-                                    href="#"
-                                    class="text-primary w-full text-left flex items-center justify-between text-base py-3 font-light"
+                                  <NuxtLink
+                                    :to="a.href"
+                                    class="text-primary hover:underline w-full text-left flex items-center justify-between text-base py-3 font-light"
                                   >
                                     <span>{{ a.name }}</span>
-                                  </a>
+                                  </NuxtLink>
                                 </li>
                               </ul>
                             </li>
@@ -240,9 +242,10 @@
             >
               <template v-for="item in company" :key="item.name">
                 <div v-if="!item.children" :class="item.mainClass">
-                  <a
-                    href="#"
-                    class="group text-white w-full flex items-center hover:underline"
+                  <NuxtLink
+                    @click="openMenu"
+                    :to="item.href"
+                    class="group cursor-pointer text-white w-full flex items-center hover:underline"
                   >
                     <div class="w-10">
                       <component
@@ -252,7 +255,7 @@
                       />
                     </div>
                     {{ item.name }}
-                  </a>
+                  </NuxtLink>
                 </div>
                 <Disclosure as="div" v-else v-slot="{ open }">
                   <DisclosureButton
@@ -300,22 +303,23 @@
                           v-for="subItem in item.children"
                           :key="subItem.name"
                         >
-                          <a
+                          <NuxtLink
                             v-if="subItem.name"
-                            href="#"
-                            class="text-primary w-full flex items-center justify-between text-lg font-medium py-3"
+                            :to="subItem.href"
+                            class="text-primary hover:underline w-full flex items-center justify-between text-lg font-medium py-3"
                           >
                             <span>{{ subItem.name }}</span>
                             <ChevronRightIcon
                               class="flex-shrink-0 h-6 w-6 text-primary"
                               aria-hidden="true"
                             />
-                          </a>
+                          </NuxtLink>
                           <ul v-for="v in subItem.list" :key="v.name">
                             <li>
-                              <a
-                                href="#"
+                              <NuxtLink
+                                :to="v.href"
                                 class="text-primary w-full flex items-center justify-between text-base py-3 font-medium border-t border-gray-900"
+                                :class="v.icon ? 'hover:underline' : ''"
                               >
                                 <span>{{ v.name }}</span>
                                 <ChevronRightIcon
@@ -323,15 +327,15 @@
                                   class="flex-shrink-0 h-6 w-6 text-primary"
                                   aria-hidden="true"
                                 />
-                              </a>
+                              </NuxtLink>
                               <ul>
                                 <li v-for="a in v.subList" :key="a.name">
-                                  <a
-                                    href="#"
-                                    class="text-primary w-full text-left flex items-center justify-between text-base py-3 font-light"
+                                  <NuxtLink
+                                    :to="a.href"
+                                    class="text-primary hover:underline w-full text-left flex items-center justify-between text-base py-3 font-light"
                                   >
                                     <span>{{ a.name }}</span>
-                                  </a>
+                                  </NuxtLink>
                                 </li>
                               </ul>
                             </li>
@@ -353,7 +357,7 @@
               <li
                 v-for="v in language"
                 :key="v.title"
-                class="text-base hover:underline transition-all"
+                class="text-base hover:underline transition-all cursor-pointer"
               >
                 {{ v.title }}
               </li>
@@ -451,7 +455,7 @@ export default {
           icon: HomeIcon,
           mainClass: "border-b border-gray-50 text-lg font-light py-2.5",
           current: true,
-          href: "#",
+          href: "/",
         },
         {
           name: "Receive",
