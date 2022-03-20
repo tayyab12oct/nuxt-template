@@ -1,13 +1,11 @@
 <!-- This example requires Tailwind CSS v2.0+ -->
 <template>
-  <Popover
-    class="fixed top-0 left-0 w-full z-50 bg-white border-t-8 border-secondary shadow-sm"
-  >
+  <Popover class="fixed top-0 left-0 w-full z-50">
     <div
-      class="absolute inset-0 shadow-sm z-30 pointer-events-none"
+      class="absolute inset-0 shadow-sm bg-white z-50 pointer-events-none"
       aria-hidden="true"
     />
-    <div class="relative z-20 overflow-hidden">
+    <div class="relative z-50 border-t-8 border-secondary overflow-hidden">
       <div
         class="max-w-7xl mx-auto flex justify-between items-center px-6 md:py-1 py-2 xl:px-0 md:justify-start md:space-x-5 lg:space-x-8"
       >
@@ -22,10 +20,15 @@
           </NuxtLink>
           <div class="border-l border-gray-100 pl-2">
             <PopoverButton
+              @click="openMenu"
               class="bg-white rounded-md lg:p-2 p-1 inline-flex items-center justify-center text-primary focus:outline-none"
             >
-              <span class="sr-only">Open menu</span>
-              <MenuIcon class="h-6 w-6" aria-hidden="true" />
+              <MenuIcon
+                v-if="menu === false"
+                class="h-6 w-6"
+                aria-hidden="true"
+              />
+              <XIcon v-else class="h-6 w-6" aria-hidden="true" />
             </PopoverButton>
           </div>
         </div>
@@ -82,127 +85,282 @@
       leave-from-class="opacity-100 scale-100"
       leave-to-class="opacity-0 scale-95"
     >
-      <PopoverPanel
+      <div
+        v-if="menu == true"
         focus
-        class="absolute z-30 top-0 inset-x-0 p-2 transition transform origin-top-right md:hidden"
+        class="fixed left-0 w-full z-30 top-0 inset-x-0 transition transform origin-top-right"
       >
         <div
-          class="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 bg-white divide-y-2 divide-gray-50"
+          class="h-screen p-6 pb-10 pt-20 lg:pt-28 flex flex-col justify-between"
+          :class="openTab === 1 ? 'bg-secondary' : 'bg-primary'"
         >
-          <div class="pt-5 pb-6 px-5 sm:pb-8">
-            <div class="flex items-center justify-between">
-              <NuxtLink to="/">
-                <img
-                  class="h-8 w-auto"
-                  src="assets/images/Logo.svg"
-                  alt="Workflow"
-                />
-              </NuxtLink>
-              <div class="-mr-2">
-                <PopoverButton
-                  class="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+          <div class="sm:pb-8 text-left">
+            <ul class="flex pt-1 list-none flex-wrap pb-7 space-x-4">
+              <li>
+                <a
+                  class="text-base cursor-pointer leading-normal pb-2 px-0.5"
+                  v-on:click="toggleTabs(1)"
+                  v-bind:class="{
+                    'text-white': openTab !== 1,
+                    'border-b border-primary border-opacity-30 text-primary font-semibold':
+                      openTab === 1,
+                  }"
                 >
-                  <span class="sr-only">xClose menu</span>
-                  <XIcon class="h-6 w-6" aria-hidden="true" />
-                </PopoverButton>
-              </div>
-            </div>
-            <div class="mt-6 sm:mt-8">
-              <nav>
-                <div class="grid gap-7 sm:grid-cols-2 sm:gap-y-8 sm:gap-x-4">
+                  Individual
+                </a>
+              </li>
+              <li>
+                <a
+                  class="text-base cursor-pointer leading-normal pb-2 px-0.5"
+                  v-on:click="toggleTabs(2)"
+                  v-bind:class="{
+                    'text-primary': openTab !== 2,
+                    'border-b border-gray-100 border-opacity-30 text-white font-semibold':
+                      openTab === 2,
+                  }"
+                >
+                  Company
+                </a>
+              </li>
+            </ul>
+            <nav
+              v-bind:class="{ hidden: openTab !== 1, block: openTab === 1 }"
+              class="flex-1"
+              aria-label="Sidebar"
+            >
+              <template v-for="item in individual" :key="item.name">
+                <div v-if="!item.children" :class="item.mainClass">
                   <a
-                    v-for="item in solutions"
-                    :key="item.name"
-                    :href="item.href"
-                    class="-m-3 flex items-center p-3 rounded-lg hover:bg-gray-50"
+                    href="#"
+                    class="group text-primary w-full flex items-center hover:underline"
                   >
-                    <div
-                      class="flex-shrink-0 flex items-center justify-center h-10 w-10 rounded-md bg-indigo-500 text-white sm:h-12 sm:w-12"
-                    >
+                    <div class="w-10">
                       <component
                         :is="item.icon"
-                        class="h-6 w-6"
+                        class="mr-3 flex-shrink-0 h-5 w-5 text-primary"
                         aria-hidden="true"
                       />
                     </div>
-                    <div class="ml-4 text-base font-medium text-gray-900">
-                      {{ item.name }}
-                    </div>
+                    {{ item.name }}
                   </a>
                 </div>
-                <div class="mt-8 text-base">
+                <Disclosure as="div" v-else v-slot="{ open }">
+                  <DisclosureButton
+                    :class="item.mainClass"
+                    class="group text-primary w-full flex items-center hover:underline"
+                  >
+                    <div class="w-10">
+                      <component
+                        :is="item.icon"
+                        class="mr-3 flex-shrink-0 h-5 w-5 text-primary"
+                        aria-hidden="true"
+                      />
+                    </div>
+                    <span class="flex-1 text-left">
+                      {{ item.name }}
+                    </span>
+                    <ChevronRightIcon
+                      class="flex-shrink-0 h-6 w-6 text-primary"
+                      aria-hidden="true"
+                    />
+                  </DisclosureButton>
+                  <transition
+                    enter-active-class="duration-200 ease-out"
+                    enter-from-class="opacity-0 scale-95"
+                    enter-to-class="opacity-100 scale-100"
+                    leave-active-class="duration-100 ease-in"
+                    leave-from-class="opacity-100 scale-100"
+                    leave-to-class="opacity-0 scale-95"
+                  >
+                    <DisclosurePanel
+                      class="bg-white absolute top-14 lg:top-20 left-2.5 w-full h-screen"
+                    >
+                      <div class="px-6 py-8 pb-18 overflow-y-auto h-full">
+                        <DisclosureButton
+                          class="w-full flex items-center space-x-2 mb-6 text-sm uppercase font-semibold text-primary"
+                        >
+                          <ChevronRightIcon
+                            class="h-6 w-6 text-primary -ml-2 transform rotate-180"
+                            aria-hidden="true"
+                          />
+                          <span>Back</span>
+                        </DisclosureButton>
+                        <DisclosureButton
+                          class="w-full"
+                          v-for="subItem in item.children"
+                          :key="subItem.name"
+                        >
+                          <a
+                            v-if="subItem.name"
+                            href="#"
+                            class="text-primary w-full flex items-center justify-between text-lg font-medium py-3"
+                          >
+                            <span>{{ subItem.name }}</span>
+                            <ChevronRightIcon
+                              class="flex-shrink-0 h-6 w-6 text-primary"
+                              aria-hidden="true"
+                            />
+                          </a>
+                          <ul v-for="v in subItem.list" :key="v.name">
+                            <li>
+                              <a
+                                href="#"
+                                class="text-primary w-full flex items-center justify-between text-base py-3 font-medium border-t border-gray-900"
+                              >
+                                <span>{{ v.name }}</span>
+                                <ChevronRightIcon
+                                  v-if="v.icon"
+                                  class="flex-shrink-0 h-6 w-6 text-primary"
+                                  aria-hidden="true"
+                                />
+                              </a>
+                              <ul>
+                                <li v-for="a in v.subList" :key="a.name">
+                                  <a
+                                    href="#"
+                                    class="text-primary w-full text-left flex items-center justify-between text-base py-3 font-light"
+                                  >
+                                    <span>{{ a.name }}</span>
+                                  </a>
+                                </li>
+                              </ul>
+                            </li>
+                          </ul>
+                        </DisclosureButton>
+                      </div>
+                    </DisclosurePanel>
+                  </transition>
+                </Disclosure>
+              </template>
+            </nav>
+            <nav
+              v-bind:class="{ hidden: openTab !== 2, block: openTab === 2 }"
+              class="flex-1"
+              aria-label="Sidebar"
+            >
+              <template v-for="item in company" :key="item.name">
+                <div v-if="!item.children" :class="item.mainClass">
                   <a
                     href="#"
-                    class="font-medium text-indigo-600 hover:text-indigo-500"
+                    class="group text-white w-full flex items-center hover:underline"
                   >
-                    View all products <span aria-hidden="true">&rarr;</span></a
-                  >
+                    <div class="w-10">
+                      <component
+                        :is="item.icon"
+                        class="mr-3 flex-shrink-0 h-5 w-5 text-white"
+                        aria-hidden="true"
+                      />
+                    </div>
+                    {{ item.name }}
+                  </a>
                 </div>
-              </nav>
-            </div>
+                <Disclosure as="div" v-else v-slot="{ open }">
+                  <DisclosureButton
+                    :class="item.mainClass"
+                    class="group text-white w-full flex items-center hover:underline"
+                  >
+                    <div class="w-10">
+                      <component
+                        :is="item.icon"
+                        class="mr-3 flex-shrink-0 h-5 w-5 text-white"
+                        aria-hidden="true"
+                      />
+                    </div>
+                    <span class="flex-1 text-left">
+                      {{ item.name }}
+                    </span>
+                    <ChevronRightIcon
+                      class="flex-shrink-0 h-6 w-6 text-white"
+                      aria-hidden="true"
+                    />
+                  </DisclosureButton>
+                  <transition
+                    enter-active-class="duration-200 ease-out"
+                    enter-from-class="opacity-0 scale-95"
+                    enter-to-class="opacity-100 scale-100"
+                    leave-active-class="duration-100 ease-in"
+                    leave-from-class="opacity-100 scale-100"
+                    leave-to-class="opacity-0 scale-95"
+                  >
+                    <DisclosurePanel
+                      class="bg-white absolute top-14 lg:top-20 left-2.5 w-full h-screen"
+                    >
+                      <div class="px-6 py-8 pb-18 overflow-y-auto h-full">
+                        <DisclosureButton
+                          class="w-full flex items-center space-x-2 mb-6 text-sm uppercase font-semibold text-primary"
+                        >
+                          <ChevronRightIcon
+                            class="h-6 w-6 text-primary -ml-2 transform rotate-180"
+                            aria-hidden="true"
+                          />
+                          <span>Back</span>
+                        </DisclosureButton>
+                        <DisclosureButton
+                          class="w-full"
+                          v-for="subItem in item.children"
+                          :key="subItem.name"
+                        >
+                          <a
+                            v-if="subItem.name"
+                            href="#"
+                            class="text-primary w-full flex items-center justify-between text-lg font-medium py-3"
+                          >
+                            <span>{{ subItem.name }}</span>
+                            <ChevronRightIcon
+                              class="flex-shrink-0 h-6 w-6 text-primary"
+                              aria-hidden="true"
+                            />
+                          </a>
+                          <ul v-for="v in subItem.list" :key="v.name">
+                            <li>
+                              <a
+                                href="#"
+                                class="text-primary w-full flex items-center justify-between text-base py-3 font-medium border-t border-gray-900"
+                              >
+                                <span>{{ v.name }}</span>
+                                <ChevronRightIcon
+                                  v-if="v.icon"
+                                  class="flex-shrink-0 h-6 w-6 text-primary"
+                                  aria-hidden="true"
+                                />
+                              </a>
+                              <ul>
+                                <li v-for="a in v.subList" :key="a.name">
+                                  <a
+                                    href="#"
+                                    class="text-primary w-full text-left flex items-center justify-between text-base py-3 font-light"
+                                  >
+                                    <span>{{ a.name }}</span>
+                                  </a>
+                                </li>
+                              </ul>
+                            </li>
+                          </ul>
+                        </DisclosureButton>
+                      </div>
+                    </DisclosurePanel>
+                  </transition>
+                </Disclosure>
+              </template>
+            </nav>
           </div>
-          <div class="py-6 px-5">
-            <div class="grid grid-cols-2 gap-4">
-              <a
-                href="#"
-                class="rounded-md text-base font-medium text-gray-900 hover:text-gray-700"
+          <div
+            class="font-light mt-auto"
+            :class="openTab === 1 ? 'text-primary' : 'text-white'"
+          >
+            <h3 class="text-xs">Language:</h3>
+            <ul class="flex items-center space-x-3 pt-2">
+              <li
+                v-for="v in language"
+                :key="v.title"
+                class="text-base hover:underline transition-all"
               >
-                Pricing
-              </a>
-
-              <a
-                href="#"
-                class="rounded-md text-base font-medium text-gray-900 hover:text-gray-700"
-              >
-                Docs
-              </a>
-
-              <a
-                href="#"
-                class="rounded-md text-base font-medium text-gray-900 hover:text-gray-700"
-              >
-                Company
-              </a>
-
-              <a
-                href="#"
-                class="rounded-md text-base font-medium text-gray-900 hover:text-gray-700"
-              >
-                Resources
-              </a>
-
-              <a
-                href="#"
-                class="rounded-md text-base font-medium text-gray-900 hover:text-gray-700"
-              >
-                Blog
-              </a>
-
-              <a
-                href="#"
-                class="rounded-md text-base font-medium text-gray-900 hover:text-gray-700"
-              >
-                Contact Sales
-              </a>
-            </div>
-            <div class="mt-6">
-              <a
-                href="#"
-                class="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
-              >
-                Sign up
-              </a>
-              <p class="mt-6 text-center text-base font-medium text-gray-500">
-                Existing customer?
-                {{ " " }}
-                <a href="#" class="text-indigo-600 hover:text-indigo-500">
-                  Sign in
-                </a>
-              </p>
-            </div>
+                {{ v.title }}
+              </li>
+            </ul>
           </div>
         </div>
-      </PopoverPanel>
+      </div>
     </transition>
   </Popover>
 </template>
@@ -213,95 +371,28 @@ import {
   PopoverButton,
   PopoverGroup,
   PopoverPanel,
+  Disclosure,
+  DisclosureButton,
+  DisclosurePanel,
 } from "@headlessui/vue";
 import {
-  BookmarkAltIcon,
-  BriefcaseIcon,
   ChartBarIcon,
-  CheckCircleIcon,
-  CursorClickIcon,
-  DesktopComputerIcon,
-  GlobeAltIcon,
-  InformationCircleIcon,
   MenuIcon,
-  NewspaperIcon,
-  OfficeBuildingIcon,
-  PhoneIcon,
-  PlayIcon,
-  ShieldCheckIcon,
-  UserGroupIcon,
-  ViewGridIcon,
+  TruckIcon,
   XIcon,
   UserIcon,
   SearchIcon,
+  CalendarIcon,
+  FolderIcon,
+  HomeIcon,
+  InboxIcon,
+  UsersIcon,
+  CogIcon,
+  ShoppingCartIcon,
+  QuestionMarkCircleIcon,
+  NewspaperIcon,
 } from "@heroicons/vue/outline";
-import { ChevronDownIcon } from "@heroicons/vue/solid";
-
-const solutions = [
-  {
-    name: "Analytics",
-    description:
-      "Get a better understanding of where your traffic is coming from.",
-    href: "#",
-    icon: ChartBarIcon,
-  },
-  {
-    name: "Engagement",
-    description: "Speak directly to your customers in a more meaningful way.",
-    href: "#",
-    icon: CursorClickIcon,
-  },
-  {
-    name: "Security",
-    description: "Your customers' data will be safe and secure.",
-    href: "#",
-    icon: ShieldCheckIcon,
-  },
-  {
-    name: "Integrations",
-    description: "Connect with third-party tools that you're already using.",
-    href: "#",
-    icon: ViewGridIcon,
-  },
-];
-const callsToAction = [
-  { name: "Watch Demo", href: "#", icon: PlayIcon },
-  { name: "View All Products", href: "#", icon: CheckCircleIcon },
-  { name: "Contact Sales", href: "#", icon: PhoneIcon },
-];
-const company = [
-  { name: "About", href: "#", icon: InformationCircleIcon },
-  { name: "Customers", href: "#", icon: OfficeBuildingIcon },
-  { name: "Press", href: "#", icon: NewspaperIcon },
-  { name: "Careers", href: "#", icon: BriefcaseIcon },
-  { name: "Privacy", href: "#", icon: ShieldCheckIcon },
-];
-const resources = [
-  { name: "Community", href: "#", icon: UserGroupIcon },
-  { name: "Partners", href: "#", icon: GlobeAltIcon },
-  { name: "Guides", href: "#", icon: BookmarkAltIcon },
-  { name: "Webinars", href: "#", icon: DesktopComputerIcon },
-];
-const blogPosts = [
-  {
-    id: 1,
-    name: "Boost your conversion rate",
-    href: "#",
-    preview:
-      "Eget ullamcorper ac ut vulputate fames nec mattis pellentesque elementum. Viverra tempor id mus.",
-    imageUrl:
-      "https://images.unsplash.com/photo-1558478551-1a378f63328e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2849&q=80",
-  },
-  {
-    id: 2,
-    name: "How to use search engine optimization to drive traffic to your site",
-    href: "#",
-    preview:
-      "Eget ullamcorper ac ut vulputate fames nec mattis pellentesque elementum. Viverra tempor id mus.",
-    imageUrl:
-      "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2300&q=80",
-  },
-];
+import { ChevronRightIcon } from "@heroicons/vue/solid";
 
 export default {
   components: {
@@ -309,20 +400,959 @@ export default {
     PopoverButton,
     PopoverGroup,
     PopoverPanel,
-    ChevronDownIcon,
+    Disclosure,
+    DisclosureButton,
+    DisclosurePanel,
     MenuIcon,
     XIcon,
     UserIcon,
     SearchIcon,
+    ChartBarIcon,
+    FolderIcon,
+    HomeIcon,
+    InboxIcon,
+    UsersIcon,
+    TruckIcon,
+    ChevronRightIcon,
+    CogIcon,
+    ShoppingCartIcon,
+    QuestionMarkCircleIcon,
+    NewspaperIcon,
   },
-  setup() {
+  data() {
     return {
-      solutions,
-      callsToAction,
-      company,
-      resources,
-      blogPosts,
+      menu: false,
+      openTab: 1,
+      language: [
+        {
+          title: "ES",
+        },
+        {
+          title: "CA",
+        },
+        {
+          title: "EU",
+        },
+        {
+          title: "GA",
+        },
+        {
+          title: "VA",
+        },
+        {
+          title: "EN",
+        },
+      ],
+      individual: [
+        {
+          name: "Home",
+          icon: HomeIcon,
+          mainClass: "border-b border-gray-50 text-lg font-light py-2.5",
+          current: true,
+          href: "#",
+        },
+        {
+          name: "Receive",
+          icon: UsersIcon,
+          mainClass: "border-b border-gray-50 text-lg font-light py-2.5",
+          current: false,
+          children: [
+            {
+              name: "Receive",
+              href: "#",
+              list: [
+                {
+                  name: "Localiza tu envío",
+                  href: "#",
+                  icon: true,
+                },
+                {
+                  name: "Planifica tus entregas",
+                  icon: true,
+                  href: "#",
+                  subList: [
+                    {
+                      name: "Buzón de vacaciones",
+                      href: "#",
+                    },
+                    {
+                      name: "Reenvío postal",
+                      href: "#",
+                    },
+                    {
+                      name: "Apartado postal",
+                      href: "#",
+                    },
+                  ],
+                },
+                {
+                  name: "Nuestros puntos de entrega y recogida",
+                  href: "#",
+                  subList: [
+                    {
+                      name: "Citypaq",
+                      href: "#",
+                    },
+                    {
+                      name: "Oficinas de Correos",
+                      href: "#",
+                    },
+                  ],
+                },
+                {
+                  name: "Esperando la entrega",
+                  href: "#",
+                  subList: [
+                    {
+                      name: "Quiero modificar la entrega",
+                      href: "#",
+                    },
+                  ],
+                },
+                {
+                  name: "Recibe muestras gratis en tu buzón",
+                  href: "#",
+                  icon: true,
+                },
+                {
+                  name: "Tramitación aduanera en la Importación",
+                  href: "#",
+                  icon: true,
+                  subList: [
+                    {
+                      name: "Importación en Península y Baleares",
+                      href: "#",
+                    },
+                    {
+                      name: "Importación en Canarias",
+                      href: "#",
+                    },
+                    {
+                      name: "Importación en Ceuta",
+                      href: "#",
+                    },
+                    {
+                      name: "Importación en Melilla",
+                      href: "#",
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+        {
+          name: "Send",
+          icon: TruckIcon,
+          mainClass: "border-b border-gray-50 text-lg font-light py-2.5",
+          current: false,
+          children: [
+            {
+              name: "Send",
+              href: "#",
+              list: [
+                {
+                  name: "Envíos nacionales",
+                  icon: true,
+                  href: "#",
+                  subList: [
+                    {
+                      name: "Envíos económicos",
+                      href: "#",
+                    },
+                    {
+                      name: "Envíos rápidos",
+                      href: "#",
+                    },
+                    {
+                      name: "Paq Frío",
+                      href: "#",
+                    },
+                    {
+                      name: "Burofax y cartas",
+                      href: "#",
+                    },
+                    {
+                      name: "Paq Maleta",
+                      href: "#",
+                    },
+                    {
+                      name: "Envío de bicicletas",
+                      href: "#",
+                    },
+                  ],
+                },
+                {
+                  name: "Enviar al extranjero",
+                  href: "#",
+                  icon: true,
+                  subList: [
+                    {
+                      name: "Paquetes al extranjero",
+                      href: "#",
+                    },
+                    {
+                      name: "Documentos al extranjero",
+                      href: "#",
+                    },
+                    {
+                      name: "Zonas internacionales",
+                      href: "#",
+                    },
+                    {
+                      name: "Gestión aduanera de exportación",
+                      href: "#",
+                    },
+                  ],
+                },
+                {
+                  name: "Sobre y embalajes",
+                  href: "#",
+                  icon: true,
+                  subList: [
+                    {
+                      name: "Línea Bosques",
+                      href: "#",
+                    },
+                    {
+                      name: "Prefanqueados",
+                      href: "#",
+                    },
+                    {
+                      name: "Sobres y embalajes",
+                      href: "#",
+                    },
+                  ],
+                },
+                {
+                  name: "Devolver un paquete",
+                  href: "#",
+                  subList: [
+                    {
+                      name: "Portal de devoluciones",
+                      href: "#",
+                    },
+                    {
+                      name: "Devuelve con Citypaq",
+                      href: "#",
+                    },
+                  ],
+                },
+                {
+                  name: "Comprar Sellos",
+                  href: "#",
+                  icon: true,
+                },
+              ],
+            },
+          ],
+        },
+        {
+          name: "Cash and purchases",
+          icon: CalendarIcon,
+          mainClass: "border-b border-gray-50 text-lg font-light py-2.5",
+          current: false,
+          children: [
+            {
+              name: "Cash and purchases",
+              href: "#",
+              list: [
+                {
+                  name: "Envío de dinero",
+                  href: "#",
+                  icon: true,
+                  subList: [
+                    {
+                      name: "Giro Internacional",
+                      href: "#",
+                    },
+                    {
+                      name: "Western Union",
+                      href: "#",
+                    },
+                    {
+                      name: "Giro Nacional",
+                      href: "#",
+                    },
+                  ],
+                },
+                {
+                  name: "Lleva el control de tu dinero y tus gastos",
+                  href: "#",
+                  subList: [
+                    {
+                      name: "Tarjeta Correos Prepago",
+                      href: "#",
+                    },
+                    {
+                      name: "Correos Cash",
+                      href: "#",
+                    },
+                    {
+                      name: "Cambio de divisas a domicilio",
+                      href: "#",
+                    },
+                  ],
+                },
+                {
+                  name: "Compra en Correos Market",
+                  href: "#",
+                  icon: true,
+                },
+                {
+                  name: "Disponible en oficinas",
+                  href: "#",
+                  subList: [
+                    {
+                      name: "Premios ONCE",
+                      href: "#",
+                    },
+                    {
+                      name: "Oferta de luz y gas",
+                      href: "#",
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+        {
+          name: "Travel, Leisure and Stamp Collecting",
+          icon: InboxIcon,
+          mainClass: "border-b border-gray-50 text-lg font-light py-2.5",
+          current: false,
+          children: [
+            {
+              name: "Travel, Leisure and Stamp Collecting",
+              href: "#",
+              list: [
+                {
+                  name: "Haz el Camino de Santiago con Correos",
+                  href: "#",
+                  icon: true,
+                  subList: [
+                    {
+                      name: "Transporte de mochilas",
+                      href: "#",
+                    },
+                    {
+                      name: "Envío de maletas",
+                      href: "#",
+                    },
+                    {
+                      name: "Consigna en Santiago",
+                      href: "#",
+                    },
+                    {
+                      name: "Tarjeta Correos Prepago para el Camino de Santiago",
+                      href: "#",
+                    },
+                  ],
+                },
+                {
+                  name: "Entradas y viajes",
+                  href: "#",
+                  icon: true,
+                },
+                {
+                  name: "Sellos y Filatelia",
+                  href: "#",
+                  icon: true,
+                },
+              ],
+            },
+          ],
+        },
+        {
+          name: "For citizens",
+          icon: ChartBarIcon,
+          mainClass: "border-b border-gray-50 text-lg font-light py-2.5",
+          current: false,
+          children: [
+            {
+              name: "For citizens",
+              href: "#",
+              list: [
+                {
+                  name: "Trámites con la Administración Pública",
+                  href: "#",
+                  subList: [
+                    {
+                      name: "Servicios ORVE",
+                      href: "#",
+                    },
+                    {
+                      name: "Buzón Digital",
+                      href: "#",
+                    },
+                  ],
+                },
+                {
+                  name: "Pago de recibos",
+                  href: "#",
+                  icon: true,
+                },
+                {
+                  name: "Servicios de la DGT",
+                  href: "#",
+                  icon: true,
+                  subList: [
+                    {
+                      name: "Distintivo medioambiental",
+                      href: "#",
+                    },
+                    {
+                      name: "Informes de vehículos",
+                      href: "#",
+                    },
+                    {
+                      name: "Duplicado permiso circulación",
+                      href: "#",
+                    },
+                    {
+                      name: "Cambio de Titularidad",
+                      href: "#",
+                    },
+                    {
+                      name: "Notificación de venta de un vehículo",
+                      href: "#",
+                    },
+                  ],
+                },
+                {
+                  name: "Tramites de la Agencia Tributaria",
+                  href: "#",
+                  icon: true,
+                },
+              ],
+            },
+          ],
+        },
+        {
+          name: "Tools",
+          icon: CogIcon,
+          mainClass: "text-sm font-semibold py-3 mt-7",
+          current: false,
+          children: [
+            {
+              name: "Tools",
+              href: "#",
+              list: [
+                {
+                  name: "Localizador de envíos",
+                  icon: true,
+                  href: "#",
+                },
+                {
+                  name: "Oficinas, buzones y Citypaq",
+                  icon: true,
+                  href: "#",
+                },
+                {
+                  name: "Buscador Códigos Postales",
+                  icon: true,
+                  href: "#",
+                },
+                {
+                  name: "Formulario online de envíos de oficina",
+                  icon: true,
+                  href: "#",
+                },
+                {
+                  name: "Gestión de estacionados",
+                  icon: true,
+                  href: "#",
+                },
+                {
+                  name: "Cotejo",
+                  icon: true,
+                  href: "#",
+                },
+                {
+                  name: "ADT Postales",
+                  icon: true,
+                  href: "#",
+                },
+              ],
+            },
+          ],
+        },
+        {
+          name: "Rates",
+          mainClass: "text-sm font-semibold py-3",
+          icon: ChartBarIcon,
+          current: false,
+        },
+        {
+          name: "Latest news",
+          icon: NewspaperIcon,
+          mainClass: "text-sm font-semibold py-3",
+          current: false,
+        },
+        {
+          name: "Shop",
+          icon: ShoppingCartIcon,
+          mainClass: "text-sm font-semibold py-3",
+          current: false,
+        },
+        {
+          name: "Help",
+          icon: QuestionMarkCircleIcon,
+          mainClass: "text-sm font-semibold py-3",
+          current: false,
+          children: [
+            {
+              name: "Help",
+              href: "#",
+              list: [
+                {
+                  name: "Enviar",
+                  href: "#",
+                  subList: [
+                    {
+                      name: "Cómo preparar el envío",
+                      href: "#",
+                    },
+                    {
+                      name: "Cómo funciona Mi Oficina",
+                      href: "#",
+                    },
+                    {
+                      name: "Dimensiones y pesos",
+                      href: "#",
+                    },
+                    {
+                      name: "Tratamiento de tus datos",
+                      href: "#",
+                    },
+                    {
+                      name: "Sellos y franqueo",
+                      href: "#",
+                    },
+                  ],
+                },
+                {
+                  name: "Recibir",
+                  href: "#",
+                  subList: [
+                    {
+                      name: "Recoger envío",
+                      href: "#",
+                    },
+                    {
+                      name: "Código de envío",
+                      href: "#",
+                    },
+                    {
+                      name: "Aviso de llegada",
+                      href: "#",
+                    },
+                    {
+                      name: "Envíos estacionados",
+                      href: "#",
+                    },
+                    {
+                      name: "Incidencias",
+                      href: "#",
+                    },
+                  ],
+                },
+                {
+                  name: "Otras consultas",
+                  href: "#",
+                  icon: true,
+                  subList: [
+                    {
+                      name: "Correos ID",
+                      href: "#",
+                    },
+                  ],
+                },
+                {
+                  name: "Información aduanera",
+                  href: "#",
+                  icon: true,
+                  subList: [
+                    {
+                      name: "DUA Importación",
+                      href: "#",
+                    },
+                    {
+                      name: "DUA Exportación",
+                      href: "#",
+                    },
+                    {
+                      name: "Brexit, importación y exportación con el Reino Unido",
+                      href: "#",
+                    },
+                    {
+                      name: "Nuevo Proceso de Seguridad de Importación",
+                      href: "#",
+                    },
+                    {
+                      name: "IVA de importación en el Comercio Electrónico",
+                      href: "#",
+                    },
+                  ],
+                },
+                {
+                  name: "Coberturas y garantías",
+                  href: "#",
+                  icon: true,
+                  subList: [
+                    {
+                      name: "Nacionales",
+                      href: "#",
+                    },
+                    {
+                      name: "Internacionales",
+                      href: "#",
+                    },
+                  ],
+                },
+                {
+                  name: "Tarifas",
+                  href: "#",
+                  icon: true,
+                },
+                {
+                  name: "Tu consulta/ tu reclamación",
+                  href: "#",
+                  icon: true,
+                  subList: [
+                    {
+                      name: "Tratamiento de las incidencias/reclamaciones/consultas",
+                      href: "#",
+                    },
+                    {
+                      name: "Da de alta tu incidencia/ reclamación",
+                      href: "#",
+                    },
+                    {
+                      name: "Modifica o amplia información",
+                      href: "#",
+                    },
+                    {
+                      name: "Conoce el estado de tu incidencia",
+                      href: "#",
+                    },
+                    {
+                      name: "Solicitud de información",
+                      href: "#",
+                    },
+                  ],
+                },
+                {
+                  name: "Seguridad de la información",
+                  href: "#",
+                  icon: true,
+                  subList: [
+                    {
+                      name: "Phishing",
+                      href: "#",
+                    },
+                    {
+                      name: "Qué hace Correos por tu seguridad",
+                      href: "#",
+                    },
+                    {
+                      name: "Decálogo de seguridad",
+                      href: "#",
+                    },
+                  ],
+                },
+                {
+                  name: "Especial Covid-19",
+                  href: "#",
+                  subList: [
+                    {
+                      name: "Admisión internacional de correspondencia y paquetería",
+                      href: "#",
+                    },
+                    {
+                      name: "Correos una empresa segura frente al COVID-19",
+                      href: "#",
+                    },
+                  ],
+                },
+                {
+                  name: "Especial Ucrania/Rusia",
+                  href: "#",
+                  icon: true,
+                },
+              ],
+            },
+          ],
+        },
+      ],
+      company: [
+        {
+          name: "Home",
+          icon: HomeIcon,
+          mainClass: "border-b border-gray-50 text-lg font-light py-2.5",
+          current: true,
+          href: "#",
+        },
+        {
+          name: "Send",
+          icon: TruckIcon,
+          mainClass: "border-b border-gray-50 text-lg font-light py-2.5",
+          current: false,
+          children: [
+            { name: "Overview", href: "#" },
+            { name: "Members", href: "#" },
+            { name: "Calendar", href: "#" },
+            { name: "Settings", href: "#" },
+          ],
+        },
+        {
+          name: "e-Commerce",
+          icon: FolderIcon,
+          mainClass: "border-b border-gray-50 text-lg font-light py-2.5",
+          current: false,
+          children: [{ name: "Overview", href: "#" }],
+        },
+        {
+          name: "Marketing",
+          icon: CalendarIcon,
+          mainClass: "border-b border-gray-50 text-lg font-light py-2.5",
+          current: false,
+          children: [{ name: "Overview", href: "#" }],
+        },
+        {
+          name: "Physical and digital communications",
+          icon: InboxIcon,
+          mainClass: "border-b border-gray-50 text-lg font-light py-2.5",
+          current: false,
+          children: [{ name: "Overview", href: "#" }],
+        },
+        {
+          name: "For your business",
+          icon: ChartBarIcon,
+          mainClass: "border-b border-gray-50 text-lg font-light py-2.5",
+          current: false,
+          children: [{ name: "Overview", href: "#" }],
+        },
+        {
+          name: "Tools",
+          icon: CogIcon,
+          mainClass: "text-sm font-semibold py-3 mt-7",
+          current: false,
+        },
+        {
+          name: "Latest news",
+          icon: NewspaperIcon,
+          mainClass: "text-sm font-semibold py-3",
+          current: false,
+          children: [{ name: "Overview", href: "#" }],
+        },
+        {
+          name: "Shop",
+          icon: ShoppingCartIcon,
+          mainClass: "text-sm font-semibold py-3",
+          current: false,
+        },
+        {
+          name: "Help",
+          icon: QuestionMarkCircleIcon,
+          mainClass: "text-sm font-semibold py-3",
+          current: false,
+          children: [
+            {
+              name: "Help",
+              href: "#",
+              list: [
+                {
+                  name: "Enviar",
+                  href: "#",
+                  subList: [
+                    {
+                      name: "Cómo preparar el envío",
+                      href: "#",
+                    },
+                    {
+                      name: "Cómo funciona Mi Oficina",
+                      href: "#",
+                    },
+                    {
+                      name: "Dimensiones y pesos",
+                      href: "#",
+                    },
+                    {
+                      name: "Tratamiento de tus datos",
+                      href: "#",
+                    },
+                    {
+                      name: "Sellos y franqueo",
+                      href: "#",
+                    },
+                  ],
+                },
+                {
+                  name: "Recibir",
+                  href: "#",
+                  subList: [
+                    {
+                      name: "Recoger envío",
+                      href: "#",
+                    },
+                    {
+                      name: "Código de envío",
+                      href: "#",
+                    },
+                    {
+                      name: "Aviso de llegada",
+                      href: "#",
+                    },
+                    {
+                      name: "Envíos estacionados",
+                      href: "#",
+                    },
+                    {
+                      name: "Incidencias",
+                      href: "#",
+                    },
+                  ],
+                },
+                {
+                  name: "Otras consultas",
+                  href: "#",
+                  icon: true,
+                  subList: [
+                    {
+                      name: "Correos ID",
+                      href: "#",
+                    },
+                  ],
+                },
+                {
+                  name: "Información aduanera",
+                  href: "#",
+                  icon: true,
+                  subList: [
+                    {
+                      name: "DUA Importación",
+                      href: "#",
+                    },
+                    {
+                      name: "DUA Exportación",
+                      href: "#",
+                    },
+                    {
+                      name: "Brexit, importación y exportación con el Reino Unido",
+                      href: "#",
+                    },
+                    {
+                      name: "Nuevo Proceso de Seguridad de Importación",
+                      href: "#",
+                    },
+                    {
+                      name: "IVA de importación en el Comercio Electrónico",
+                      href: "#",
+                    },
+                  ],
+                },
+                {
+                  name: "Coberturas y garantías",
+                  href: "#",
+                  icon: true,
+                  subList: [
+                    {
+                      name: "Nacionales",
+                      href: "#",
+                    },
+                    {
+                      name: "Internacionales",
+                      href: "#",
+                    },
+                  ],
+                },
+                {
+                  name: "Tarifas",
+                  href: "#",
+                  icon: true,
+                },
+                {
+                  name: "Tu consulta/ tu reclamación",
+                  href: "#",
+                  icon: true,
+                  subList: [
+                    {
+                      name: "Tratamiento de las incidencias/reclamaciones/consultas",
+                      href: "#",
+                    },
+                    {
+                      name: "Da de alta tu incidencia/ reclamación",
+                      href: "#",
+                    },
+                    {
+                      name: "Modifica o amplia información",
+                      href: "#",
+                    },
+                    {
+                      name: "Conoce el estado de tu incidencia",
+                      href: "#",
+                    },
+                    {
+                      name: "Solicitud de información",
+                      href: "#",
+                    },
+                  ],
+                },
+                {
+                  name: "Seguridad de la información",
+                  href: "#",
+                  icon: true,
+                  subList: [
+                    {
+                      name: "Phishing",
+                      href: "#",
+                    },
+                    {
+                      name: "Qué hace Correos por tu seguridad",
+                      href: "#",
+                    },
+                    {
+                      name: "Decálogo de seguridad",
+                      href: "#",
+                    },
+                  ],
+                },
+                {
+                  name: "Especial Covid-19",
+                  href: "#",
+                  subList: [
+                    {
+                      name: "Admisión internacional de correspondencia y paquetería",
+                      href: "#",
+                    },
+                    {
+                      name: "Correos una empresa segura frente al COVID-19",
+                      href: "#",
+                    },
+                  ],
+                },
+                {
+                  name: "Especial Ucrania/Rusia",
+                  href: "#",
+                  icon: true,
+                },
+              ],
+            },
+          ],
+        },
+      ],
     };
+  },
+  methods: {
+    openMenu() {
+      this.menu = !this.menu;
+      console.log(this.menu, "menu");
+    },
+    toggleTabs: function (tabNumber) {
+      this.openTab = tabNumber;
+    },
   },
 };
 </script>

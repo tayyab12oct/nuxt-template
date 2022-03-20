@@ -22,7 +22,7 @@
         </svg>
       </div>
       <div
-        class="md:py-16 py-6 px-6 md:px-12 lg:pb-24 xl:px-0 max-w-xl mx-auto w-full md:col-span-3 lg:col-span-1"
+        class="md:py-16 py-6 pb-12 px-6 md:px-12 lg:pb-24 xl:px-0 max-w-xl mx-auto w-full md:col-span-3 lg:col-span-1"
       >
         <h3 class="text-gray-300 font-bold lg:text-sm text-xs">
           Controlled temperature transport solutions
@@ -51,7 +51,7 @@
       </svg>
     </div>
     <div
-      class="max-w-7xl mx-auto w-full px-6 xl:px-0 pb-20 pt-8 grid lg:grid-cols-4 md:grid-cols-2 gap-2"
+      class="max-w-7xl mx-auto w-full px-5 xl:px-0 pb-20 pt-8 grid lg:grid-cols-4 md:grid-cols-2 gap-2"
     >
       <div class="flex" v-for="v in data" :key="v.title">
         <div class="pt-3 pr-3">

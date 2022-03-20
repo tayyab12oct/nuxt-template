@@ -28,6 +28,7 @@ module.exports = {
       slate: colors.slate,
       gray: {
         ...colors.gray,
+        50: "rgba(128, 128, 128, 0.5)",
         100: "#cbcbcb",
         200: "#F3F2F2",
         300: "#333333",
