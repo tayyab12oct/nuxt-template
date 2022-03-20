@@ -6,7 +6,7 @@
       name="description"
       content="Advertise the benefits of your product or service with Correos. Mailings and Publicorreos. Campaign profitability, personalised deliveries. "
     />
-    <div class="bg-secondary relative lg:pt-10 mt-20">
+    <div class="bg-secondary relative lg:pt-10 mt-12 lg:mt-20">
       <div
         class="max-w-7xl mx-auto text-primary font-light hidden lg:block pt-2"
       >

@@ -1,16 +1,13 @@
 <template>
-  <div class="overflow-x-hidden">
-    <Title>Welcome to Correos.es - The Online Portal of Correos </Title>
-    <meta
-      name="description"
-      content="Localiza tu envío, una oficina o cualquier código postal. Información sobre todos nuestros productos y servicios. Contratación online. "
-    />
+  <div>
+    <Title>Correos Frío</Title>
+    <meta name="description" content="" />
     <div
-      class="bg-white border-0 mt-20 relative grid lg:grid-cols-2 md:grid-cols-5 grid-cols-1"
+      class="bg-gray-200 mt-12 lg:mt-20 relative grid lg:grid-cols-2 md:grid-cols-5 grid-cols-1"
     >
       <div
-        class="relative bg-center bg-cover bg-no-repeat md:h-full h-38 md:col-span-2 lg:col-span-1"
-        style="background: url('assets/images/CFrio.jpg')"
+        class="relative bg-center bg-cover bg-no-repeat md:h-full h-44 md:col-span-2 lg:col-span-1"
+        style="background: url('assets/images/foto_resultados.jpg')"
       >
         <svg
           class="w-full absolute bottom-0 md:hidden"
@@ -20,34 +17,27 @@
           <path
             class="path sc-correos-cdk-simple-header"
             d="M00 30 Q 50 40 100 30 L100 60 L0 60 Z"
-            fill="#fff"
+            fill="#F3F2F2"
           ></path>
         </svg>
       </div>
       <div
-        class="relative md:py-16 lg:py-22 py-8 px-14 md:px-12 xl:px-0 max-w-xl mx-auto w-full md:col-span-3 lg:col-span-1"
+        class="md:py-16 py-6 px-6 md:px-12 lg:pb-24 xl:px-0 max-w-xl mx-auto w-full md:col-span-3 lg:col-span-1"
       >
-        <h3 class="text-gray-300 font-bold lg:text-sm text-xs">Companies</h3>
+        <h3 class="text-gray-300 font-bold lg:text-sm text-xs">
+          Controlled temperature transport solutions
+        </h3>
         <h1
           class="text-gray-300 py-3 font-light md:text-3xl text-2xl tracking-wide"
         >
           Correos Frío
         </h1>
-        <p class="lg:text-base text-sm font-extralight md:pb-8 pb-5">
-          Refrigerated deliveries, guaranteed.
+        <p class="lg:text-base text-sm font-extralight max-w-lg lg:pr-10 pb-8">
+          Our new transport service in which we control the cold chain of your
+          posted item and ensure that the contents arrive in perfect condition.
         </p>
-        <Button value="See more" />
-        <img
-          src="@/assets/images/deco_triangles.svg"
-          alt=""
-          class="absolute top-22 -right-8 hidden lg:block"
-        />
+        <Button value="Request info" />
       </div>
-      <img
-        src="@/assets/images/deco_bars.svg"
-        alt=""
-        class="absolute -bottom-10 -right-24 z-10 hidden lg:block"
-      />
       <svg
         class="w-full absolute bottom-0"
         viewBox="0 0 100 35"
@@ -60,263 +50,240 @@
         ></path>
       </svg>
     </div>
-    <div class="md:-mt-6 pt-5 md:pt-0 relative px-6 xl:px-0">
-      <TrackOrder />
+    <div
+      class="max-w-7xl mx-auto w-full px-6 xl:px-0 pb-20 pt-8 grid lg:grid-cols-4 md:grid-cols-2 gap-2"
+    >
+      <div class="flex" v-for="v in data" :key="v.title">
+        <div class="pt-3 pr-3">
+          <div class="w-8">
+            <img src="@/assets/images/plus.png" class="w-full" alt="" />
+          </div>
+        </div>
+        <div>
+          <h1 class="text-gray-300 py-3 md:text-2xl text-xl">
+            {{ v.title }}
+          </h1>
+          <p class="lg:text-base text-sm font-extralight">
+            {{ v.desc }}
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="bg-primary">
+      <div
+        class="max-w-7xl mx-auto w-full px-6 xl:px-0 lg:py-10 py-6 grid md:grid-cols-2 grid-cols-1 lg:gap-8 gap-5"
+      >
+        <div
+          class="bg-white rounded-lg lg:px-6 px-4 border border-gray-100 shadow-sm flex lg:flex-row md:flex-col flex-row lg:items-center md:items-start items-center lg:space-x-4 lg:py-8 py-4"
+          v-for="i in foodCard"
+          :key="i"
+        >
+          <div class="">
+            <div class="lg:w-32 md:w-48 w-18">
+              <img :src="i.src" class="w-full" alt="" />
+            </div>
+          </div>
+          <div
+            class="lg:pb-12 md:pb-16 md:pt-4 lg:pt-0 pl-5 md:pl-0 max-w-xs text-ellipsis overflow-hidden whitespace-nowrap md:whitespace-normal md:max-w-full"
+          >
+            <h1
+              class="text-gray-300 font-semibold lg:text-2xl md:text-xl text-base md:pb-2 pb-4"
+            >
+              {{ i.title }}
+            </h1>
+            <p
+              class="text-gray-300 lg:text-base md:text-sm text-xs font-light md:font-normal"
+            >
+              {{ i.text }}
+            </p>
+          </div>
+          <div class="md:hidden">
+            <div class="flex items-center justify-end w-10 pr-2">
+              <ChevronRightIcon class="w-5" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="py-20 lg:py-0 relative overflow-hidden">
+      <div
+        class="z-30 lg:absolute w-full h-full top-0 left-0 flex items-center"
+      >
+        <div
+          class="max-w-7xl mx-auto w-full px-6 xl:px-0 flex items-center lg:-mt-0.5"
+        >
+          <div
+            class="bg-white rounded-lg border border-gray-100 lg:-mt-24 md:p-10 p-4 shadow-sm lg:px-20 md:px-16 max-w-3xl ml-auto"
+          >
+            <h1
+              class="lg:text-3xl text-3xl pb-4 lg:leading-[48px] text-gray-300 font-light tracking-wide"
+            >
+              Pharmaceutical and Health
+            </h1>
+            <p
+              class="border-t border-secondary pt-4 pb-3 lg:text-lg text-base text-gray-300 font-light"
+            >
+              The urgent temperature-controlled transport solution for the
+              pharmaceutical and healthcare industry. We offer maximum
+              reliability, and guarantee the safety and security conditions of
+              your products. Correos aims to be the ideal logistics partner for
+              the healthcare sector.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="lg:grid grid-cols-2 items-end py-20 w-full h-full hidden">
+        <img
+          src="@/assets/images/med.jpg"
+          alt=""
+          class="h-96 w-full rounded-lg"
+        />
+        <div class="lg:flex items-end justify-end hidden">
+          <img src="@/assets/images/deco_03.svg" alt="" class="-mr-30" />
+        </div>
+      </div>
+    </div>
+    <div class="bg-gray-200">
+      <SpecificSolution :list="list1" />
+    </div>
+    <div class="py-20 lg:py-0 relative overflow-hidden">
+      <div
+        class="z-30 lg:absolute w-full h-full -top-1.5 left-0 flex items-center"
+      >
+        <div
+          class="max-w-7xl mx-auto w-full px-6 xl:px-0 flex items-center lg:-mt-12"
+        >
+          <div
+            class="bg-white rounded-lg border border-gray-100 lg:-mt-24 md:p-10 p-4 shadow-sm lg:px-32 md:px-16 max-w-4xl"
+          >
+            <h1
+              class="lg:text-3xl text-3xl pb-4 lg:leading-[48px] text-gray-300 font-light tracking-wide"
+            >
+              Food
+            </h1>
+            <p
+              class="border-t border-secondary pt-4 pb-3 lg:text-lg text-base text-gray-300 font-light"
+            >
+              We guarantee the quality of your fresh products thanks to the
+              transportation solutions Correos Frío offers your business.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div
+        class="lg:grid grid-cols-2 items-end py-20 pr-6 w-full h-full hidden"
+      >
+        <div class="lg:flex items-end hidden">
+          <img src="@/assets/images/deco_03.svg" alt="" class="-ml-30" />
+        </div>
+        <img
+          src="@/assets/images/store.jpg"
+          alt=""
+          class="h-96 w-full rounded-lg"
+        />
+      </div>
+    </div>
+    <div class="bg-gray-200">
+      <SpecificSolution :list="list2" />
     </div>
     <div
-      class="max-w-7xl mx-auto w-full px-6 lg:py-10 xl:px-0 md:pt-8 pb-6 pt-4"
+      class="max-w-7xl mx-auto w-full px-6 xl:px-0 md:py-22 md:pb-32 pt-10 pb-20 grid lg:grid-cols-3 md:grid-cols-5 grid-cols-1 lg:gap-20 md:gap-8 gap-2 lg:pr-10"
     >
-      <h1 class="text-gray-300 lg:text-4xl text-2xl lg:py-10 pb-10">
-        We want to offer you the services your business needs
-      </h1>
-      <p
-        class="text-gray-300 lg:text-lg text-base font-light tracking-[-0.005em] pb-10"
-      >
-        Correos has the products and services your business needs: E-commerce
-        solutions, package deliveries, logistics, marketing and communications,
-        and much more. <br />
-        No matter how big or small your company, we know we can help you.
-      </p>
-
-      <div
-        class="grid lg:grid-cols-2 md:grid-cols-5 grid-cols-1 gap-8 items-start lg:max-w-6xl max-w-2xl lg:px-7 md:px-4 mx-auto"
-      >
-        <div
-          class="lg:px-6 px-14 md:p-0 flex justify-end md:col-span-2 lg:col-span-1 md:order-1"
+      <div class="lg:col-span-1 md:col-span-2 p-10 md:p-0 md:pl-5">
+        <img src="@/assets/images/correos_frío.svg" class="w-full" alt="" />
+      </div>
+      <div class="lg:col-span-2 md:col-span-3">
+        <h1
+          class="lg:text-3xl text-2xl pb-4 lg:leading-[48px] text-gray-300 font-medium tracking-wide"
         >
+          How to contract Correos Frío?
+        </h1>
+        <p
+          class="pb-3 lg:text-lg text-base text-gray-300 font-light md:pr-8 lg:pr-0"
+        >
+          It’s easy to contact Correos Frío and ask about our services with no
+          commitment on your part. Just fill in the form that appears when you
+          click “Request Info”. We will receive your request and a specialist
+          advisor will contact you to offer you the best solution for your
+          business.
+        </p>
+        <div class="md:flex items-center lg:space-x-5 md:space-x-4">
+          <Button value="request info" width="w-full md:w-auto" />
+        </div>
+      </div>
+    </div>
+    <div class="bg-gray-200">
+      <div
+        class="max-w-7xl mx-auto w-full px-6 md:px-10 xl:px-0 md:py-18 py-12 grid lg:grid-cols-3 md:grid-cols-5 grid-cols-1 lg:gap-20 md:gap-8 gap-2 lg:pr-10"
+      >
+        <div class="lg:col-span-1 md:col-span-2 p-10 md:p-0 md:pl-5 md:order-1">
           <img
-            src="@/assets/images/deberiás_saber.svg"
+            src="@/assets/images/correos_frio_white.svg"
+            class="w-full"
             alt=""
-            class="max-w-sm w-full"
           />
         </div>
-        <div class="space-y-5 md:col-span-3 lg:col-span-1 md:order-0">
-          <p class="text-gray-300 lg:text-lg text-base font-light">
-            Please leave your details and we will contact you as soon as
-            possible.
+        <div class="lg:col-span-2 md:col-span-3 md:order-0">
+          <h1
+            class="lg:text-3xl text-2xl pb-2 text-gray-300 font-medium tracking-wide"
+          >
+            Why Correos Frío?
+          </h1>
+          <p class="pb-3 lg:text-lg text-base text-gray-300 font-light">
+            We offer a personalised solution to help you meet your business
+            goals. We also contribute to managing traffic and thus reducing
+            carbon emissions in cities.
           </p>
-          <Input
-            v-for="v in fields"
-            :key="v"
-            :label="v.label"
-            :type="v.type"
-            :id="v.id"
-            mainClass="bg-gray-200"
-            :placeholder="v.label"
-          />
-          <Select />
-          <div class="pb-7">
-            <Checkbox
-              id="test"
-              text="I have read and accept the"
-              linkText="Data Protection Policy."
-            />
-          </div>
-          <hr class="border-gray-900" />
-          <OfferPromotion />
-          <Button
-            value="Enviar"
-            mainClass="bg-gray-200 text-gray-300 border border-gray-900 lg:text-base text-sm uppercase font-bold md;py-4 py-3 lg:px-8 px-6 text-opacity-50"
-            width="md:w-auto w-full"
-          />
         </div>
       </div>
     </div>
-    <div class="py-10 lg:py-0 relative overflow-hidden">
-      <div
-        class="z-30 lg:absolute w-full h-full top-0 left-0 flex items-center"
-      >
-        <div
-          class="max-w-7xl mx-auto w-full px-6 xl:px-0 h-full lg:pt-10 flex items-start"
-        >
-          <div
-            class="bg-white rounded-lg border border-gray-100 md:p-10 p-4 shadow-sm lg:px-20 md:pb-12 md:px-16 max-w-3xl w-full ml-auto"
-          >
-            <h1
-              class="lg:text-3xl text-3xl pb-4 lg:leading-[48px] text-gray-300 font-light tracking-wide"
-            >
-              Attention entrepreneurs!
-            </h1>
-            <p
-              class="border-t border-secondary pt-4 pb-7 lg:text-lg text-base text-gray-300 font-light"
-            >
-              The call is now open for the 4th #LehnicaChallenge, the Correos
-              Start-up Acceleration Programme.
-            </p>
-            <Button value="Sign up here!" />
-          </div>
-        </div>
-      </div>
-      <div
-        class="lg:grid grid-cols-2 items-end py-10 pl-6 w-full h-full hidden max-w-9xl ml-auto"
-      >
+    <div
+      class="max-w-7xl mx-auto w-full px-6 xl:px-0 md:py-22 py-12 grid md:grid-cols-5 grid-cols-1 lg:gap-20 gap-2 lg:pr-10"
+    >
+      <div class="md:col-span-2 p-10 lg:p-0">
         <img
-          src="@/assets/images/DSC_0402.jpg"
+          src="@/assets/images/enviar_caja isotérmica.svg"
+          class="w-full"
           alt=""
-          class="h-96 w-full rounded-lg"
-        />
-        <div class="lg:flex items-end justify-end hidden">
-          <img src="@/assets/images/deco_bars.svg" alt="" class="-mr-30" />
-        </div>
-      </div>
-    </div>
-    <div class="py-10 lg:py-0 relative overflow-hidden bg-gray-200">
-      <div
-        class="z-30 lg:absolute w-full h-full top-0 left-0 flex items-center"
-      >
-        <div
-          class="max-w-7xl mx-auto w-full px-6 xl:px-0 flex items-start h-full py-10"
-        >
-          <div
-            class="bg-white rounded-lg border border-gray-100 md:p-10 p-4 shadow-sm md:px-16 max-w-3xl w-full"
-          >
-            <h1
-              class="lg:text-3xl text-3xl pb-4 lg:leading-[48px] text-gray-300 font-light tracking-wide"
-            >
-              Solutions for your shipments
-            </h1>
-            <p
-              class="border-t border-secondary pt-4 pb-3 lg:text-lg text-base text-gray-300 font-light"
-            >
-              Everything your company needs to get your products to your
-              customers.
-            </p>
-            <router-link
-              to=""
-              class="my-5 text-primary font-bold lg:text-base text-sm hover:underline flex items-center space-x-4"
-            >
-              <span>MORE INFO</span>
-              <ChevronRightIcon class="w-5 text-primary" />
-            </router-link>
-          </div>
-        </div>
-      </div>
-      <div
-        class="lg:grid grid-cols-2 items-end py-10 pr-6 w-full h-full hidden max-w-9xl"
-      >
-        <div class="lg:flex items-end hidden">
-          <img src="@/assets/images/deco_03.svg" alt="" class="-ml-30" />
-        </div>
-        <img
-          src="@/assets/images/Sobres-y-cajas.jpg"
-          alt=""
-          class="h-96 w-full rounded-lg"
         />
       </div>
-    </div>
-    <div class="bg-white p-4">
-      <CompainsCard :cards="cards1" />
-    </div>
-    <div class="py-10 lg:py-0 relative overflow-hidden bg-gray-200">
-      <div
-        class="z-30 lg:absolute w-full h-full top-0 left-0 flex items-center"
-      >
-        <div
-          class="max-w-7xl mx-auto w-full px-6 xl:px-0 h-full lg:pt-10 flex items-start"
+      <div class="md:col-span-3">
+        <h1
+          class="lg:text-3xl text-3xl pb-4 lg:leading-[48px] text-gray-300 font-light tracking-wide"
         >
-          <div
-            class="bg-white rounded-lg border border-gray-100 md:p-10 p-4 shadow-sm lg:px-20 md:px-16 max-w-3xl w-full ml-auto"
-          >
-            <h1
-              class="lg:text-3xl text-3xl pb-4 lg:leading-[48px] text-gray-300 font-light tracking-wide"
-            >
-              How to be a Correos customer
-            </h1>
-            <p
-              class="border-t border-secondary pt-4 pb-3 lg:text-lg text-base text-gray-300 font-light"
-            >
-              At Correos, we have the most competitive solutions for your
-              deliveries.
-            </p>
-            <router-link
-              to=""
-              class="my-5 text-primary font-bold lg:text-base text-sm hover:underline flex items-center space-x-4"
-            >
-              <span>MORE INFO</span>
-              <ChevronRightIcon class="w-5 text-primary" />
-            </router-link>
-          </div>
-        </div>
-      </div>
-      <div class="lg:grid grid-cols-2 items-end py-10 w-full h-full hidden">
-        <img
-          src="@/assets/images/Paqueteria-ecommerce_OK.jpg"
-          alt=""
-          class="h-96 w-full rounded-lg"
-        />
-        <div class="lg:flex items-end justify-end hidden">
-          <img src="@/assets/images/deco_bars.svg" alt="" class="-mr-30" />
-        </div>
-      </div>
-    </div>
-    <div class="bg-white">
-      <CompainsCard :cards="cards2" />
-    </div>
-    <div class="py-10 lg:py-0 relative overflow-hidden bg-gray-200">
-      <div
-        class="z-30 lg:absolute w-full h-full top-0 left-0 flex items-center"
-      >
-        <div
-          class="max-w-7xl mx-auto w-full px-6 xl:px-0 flex items-start h-full py-10"
+          And if you need to send a one-off delivery, you can also do it using
+          Paq Frío.
+        </h1>
+        <p
+          class="border-t border-secondary pt-4 pb-3 lg:text-lg text-base text-gray-300 font-light"
         >
-          <div
-            class="bg-white rounded-lg border border-gray-100 md:p-10 p-4 shadow-sm lg:px-32 md:px-16 max-w-4xl"
+          You don’t need to own a warehouse or order wholesale goods deliveries!
+          If you need to send a one-off delivery without breaking the cold
+          chain, Correos has the answer.
+        </p>
+        <div class="md:flex items-center lg:space-x-5 md:space-x-4">
+          <Button value="Send a delivery" />
+          <router-link
+            to=""
+            class="mt-3 md:mt-0 text-primary font-bold lg:text-base text-sm hover:underline flex items-center space-x-4"
           >
-            <h1
-              class="lg:text-3xl text-3xl pb-4 lg:leading-[48px] text-gray-300 font-light tracking-wide"
-            >
-              Discover the new Correos blog!
-            </h1>
-            <p
-              class="border-t border-secondary pt-4 pb-3 lg:text-lg text-base text-gray-300 font-light"
-            >
-              Get the latest news from the world of Correos: new products and
-              services, fun facts, useful tips, and much more. Not to be missed!
-            </p>
-            <router-link
-              to=""
-              class="my-5 text-primary font-bold lg:text-base text-sm hover:underline flex items-center space-x-4"
-            >
-              <span>MORE INFO</span>
-              <ChevronRightIcon class="w-5 text-primary" />
-            </router-link>
-          </div>
+            <span>MORE INFO ON PAQ FRÍO</span>
+            <ChevronRightIcon class="w-5 text-primary" />
+          </router-link>
         </div>
-      </div>
-      <div
-        class="lg:grid grid-cols-2 items-end py-10 pr-6 w-full h-full hidden"
-      >
-        <div class="lg:flex items-end hidden">
-          <img src="@/assets/images/deco_03.svg" alt="" class="-ml-30" />
-        </div>
-        <img
-          src="@/assets/images/bloque_blog-2.jpg"
-          alt=""
-          class="h-96 w-full rounded-lg"
-        />
       </div>
     </div>
   </div>
 </template>
 <script>
-import Input from "../components/Input";
-import Select from "../components/Select";
 import Button from "../components/Button";
-import Checkbox from "../components/Checkbox";
-import OfferPromotion from "../components/OfferPromotion";
-import CompainsCard from "../components/CompainsCard";
-import TrackOrder from "../components/TrackOrder";
+import SpecificSolution from "../components/SpecificSolution";
 import { ChevronRightIcon } from "@heroicons/vue/outline";
 export default {
   components: {
-    Input,
-    Select,
     Button,
-    Checkbox,
-    CompainsCard,
-    OfferPromotion,
-    TrackOrder,
     ChevronRightIcon,
+    SpecificSolution,
   },
   data() {
     return {
@@ -338,38 +305,95 @@ export default {
           desc: "Our fleet of insulated and refrigerated vehicles is especially designed to guarantee control and maintenance of the cold chain for your deliveries.",
         },
       ],
-      fields: [
-        { id: "companyName", type: "text", label: "Company name*" },
-        { id: "cif", type: "text", label: "CIF*" },
-        { id: "name", type: "text", label: "Contact name" },
-        { id: "number", type: "text", label: "Mobile phone*" },
-        { id: "email", type: "email", label: "Email address*" },
-        { id: "category", type: "select", label: "Select product category" },
-      ],
-      cards1: [
+      foodCard: [
         {
-          src: "assets/images/Vender_MKplaces.jpg",
-          title: "E-commerce solutions",
-          text: "Move your business to the online world with Correos' e-commerce solutions.",
-          to: "",
+          src: "assets/images/health.svg",
+          title: "Pharmaceutical and Health",
+          text: "Correos offers new cold transport solutions for the delivery of pharmaceutical products, vaccines, cosmetics and healthcare items, guaranteeing their integrity and security.",
         },
         {
-          src: "assets/images/Publibuzón.jpg",
-          title: "Marketing solutions",
-          text: "Communicate with your customers how and whenever you want.",
+          src: "assets/images/alimentacion.svg",
+          title: "Food",
+          text: "We transport your fresh products in a controlled temperature to guarantee their quality from the point of origin to the destination.",
         },
       ],
-      cards2: [
+      list1: [
         {
-          src: "assets/images/Carta_digital.jpg",
-          title: "Physical and digital communications",
-          text: "Always in touch with your customers.",
-          to: "",
+          src: "assets/images/cold_chain.svg",
+          title: "Cold Chain",
+          text: "Our leadership in logistics and the latest technology on the market are combined in the Coldchain service. Designed especially for laboratories and distributors who need to deliver their products to hospitals, clinics, and medical centres:",
+          list: [
+            { text: "We offer an urgent transportation solution (B2B)." },
+            {
+              text: "Delivery of pharmaceutical products: medicines, vaccines and samples.",
+            },
+            { text: "We provide sensorised insulated shipping boxes." },
+            {
+              text: "We monitor temperature, humidity and impacts on your deliveries in real time.",
+            },
+          ],
         },
         {
-          src: "assets/images/Informe-devoluciones.jpg",
-          title: "For your business",
-          text: "We think about you and help you to boost your business,",
+          src: "assets/images/farmacia_hospitalaria.svg",
+          title: "Hospital Pharmacy",
+          text: "Proximity, safety and guarantee are combined in our Hospital Pharmacy delivery service. Especially designed for hospitals and clinics that need to deliver their medications and healthcare products to patients at home:",
+          list: [
+            {
+              text: "Collection from the Hospital and delivery to the patient’s home on the same day.",
+            },
+            {
+              text: "Delivery of medications and products from the hospital pharmacy.",
+            },
+            {
+              text: "We use insulated shipping boxes and/or insulated vehicles for their transport.",
+            },
+            { text: "Technological platform for managing your deliveries." },
+          ],
+        },
+      ],
+      list2: [
+        {
+          src: "assets/images/cold_chain.svg",
+          title: "Wholesale Distribution",
+          text: "Focus on increasing your sales and growing your business. Correos will take care of your logistics:",
+          list: [
+            {
+              text: "We pick up your products at the wholesale market or your warehouse.",
+            },
+            {
+              text: "We deliver to retail shops, collectives and hospitality establishments.",
+            },
+            { text: "Home delivery of perishable products." },
+            {
+              text: "We offer a fleet of insulated and refrigerated vehicles.",
+            },
+          ],
+        },
+        {
+          src: "assets/images/farmacia_hospitalaria.svg",
+          title: "Last-Mile Services",
+          text: "Your fresh products arrive in perfect condition at your customers’ homes, with the last-mile delivery service designed to ensure fast, safe, refrigerated delivery:",
+          list: [
+            { text: "We collect items and deliver them the same day." },
+            { text: "The ideal solution for retail shops and food markets." },
+            { text: "Home delivery of perishable products." },
+            { text: "We use insulated shipping boxes and special vehicles." },
+          ],
+        },
+        {
+          src: "assets/images/farmacia_hospitalaria.svg",
+          title: "E-commerce and Gourmet",
+          text: "If you sell online and need a temperature-controlled transport solution that guarantees the quality of your products, wherever your customer may be, this is the service you’re looking for:",
+          list: [
+            { text: "We offer urgent deliveries: Where and when you want." },
+            {
+              text: "We deliver your product anywhere in Spain, mainland Portugal, and Andorra.",
+            },
+            {
+              text: "We use insulated shipping boxes to conserve and protect your products.",
+            },
+            { text: "We have different types of integrated technology." },
+          ],
         },
       ],
     };
