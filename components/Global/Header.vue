@@ -91,14 +91,14 @@
         class="fixed left-0 w-full z-30 top-0 inset-x-0 transition transform origin-top-right"
       >
         <div
-          class="h-screen p-6 pb-10 pt-20 lg:pt-28 flex flex-col justify-between"
+          class="h-screen p-6 pb-10 pt-20 lg:pt-28 lg:px-16 flex flex-col justify-between"
           :class="openTab === 1 ? 'bg-secondary' : 'bg-primary'"
         >
           <div class="sm:pb-8 text-left">
             <ul class="flex pt-1 list-none flex-wrap pb-7 space-x-4">
               <li>
                 <a
-                  class="text-base cursor-pointer leading-normal pb-2 px-0.5"
+                  class="text-base lg:text-lg cursor-pointer leading-normal pb-2 px-0.5"
                   v-on:click="toggleTabs(1)"
                   v-bind:class="{
                     'text-white': openTab !== 1,
@@ -111,7 +111,7 @@
               </li>
               <li>
                 <a
-                  class="text-base cursor-pointer leading-normal pb-2 px-0.5"
+                  class="text-base lg:text-lg cursor-pointer leading-normal pb-2 px-0.5"
                   v-on:click="toggleTabs(2)"
                   v-bind:class="{
                     'text-primary': openTab !== 2,
@@ -206,7 +206,7 @@
                             <li>
                               <NuxtLink
                                 :to="v.href"
-                                class="text-primary w-full flex items-center justify-between text-base py-3 font-medium border-t border-gray-900"
+                                class="text-primary w-full flex items-center justify-between text-base py-3 font-medium text-left border-t border-gray-900"
                                 :class="v.icon ? 'hover:underline' : ''"
                               >
                                 <span>{{ v.name }} tect</span>
@@ -318,7 +318,7 @@
                             <li>
                               <NuxtLink
                                 :to="v.href"
-                                class="text-primary w-full flex items-center justify-between text-base py-3 font-medium border-t border-gray-900"
+                                class="text-primary w-full flex items-center justify-between text-base py-3 font-medium text-left border-t border-gray-900"
                                 :class="v.icon ? 'hover:underline' : ''"
                               >
                                 <span>{{ v.name }}</span>
@@ -453,14 +453,16 @@ export default {
         {
           name: "Home",
           icon: HomeIcon,
-          mainClass: "border-b border-gray-50 text-lg font-light py-2.5",
+          mainClass:
+            "border-b border-gray-50 text-lg lg:text-2xl font-light py-2.5",
           current: true,
           href: "/",
         },
         {
           name: "Receive",
           icon: UsersIcon,
-          mainClass: "border-b border-gray-50 text-lg font-light py-2.5",
+          mainClass:
+            "border-b border-gray-50 text-lg lg:text-2xl font-light py-2.5",
           current: false,
           children: [
             {
@@ -550,7 +552,8 @@ export default {
         {
           name: "Send",
           icon: TruckIcon,
-          mainClass: "border-b border-gray-50 text-lg font-light py-2.5",
+          mainClass:
+            "border-b border-gray-50 text-lg lg:text-2xl font-light py-2.5",
           current: false,
           children: [
             {
@@ -656,7 +659,8 @@ export default {
         {
           name: "Cash and purchases",
           icon: CalendarIcon,
-          mainClass: "border-b border-gray-50 text-lg font-light py-2.5",
+          mainClass:
+            "border-b border-gray-50 text-lg lg:text-2xl font-light py-2.5",
           current: false,
           children: [
             {
@@ -726,7 +730,8 @@ export default {
         {
           name: "Travel, Leisure and Stamp Collecting",
           icon: InboxIcon,
-          mainClass: "border-b border-gray-50 text-lg font-light py-2.5",
+          mainClass:
+            "border-b border-gray-50 text-lg lg:text-2xl font-light py-2.5",
           current: false,
           children: [
             {
@@ -773,7 +778,8 @@ export default {
         {
           name: "For citizens",
           icon: ChartBarIcon,
-          mainClass: "border-b border-gray-50 text-lg font-light py-2.5",
+          mainClass:
+            "border-b border-gray-50 text-lg lg:text-2xl font-light py-2.5",
           current: false,
           children: [
             {
@@ -838,7 +844,7 @@ export default {
         {
           name: "Tools",
           icon: CogIcon,
-          mainClass: "text-sm font-semibold py-3 mt-7",
+          mainClass: "text-sm lg:text-base font-semibold py-3 lg:py-2 mt-7",
           current: false,
           children: [
             {
@@ -886,26 +892,26 @@ export default {
         },
         {
           name: "Rates",
-          mainClass: "text-sm font-semibold py-3",
+          mainClass: "text-sm lg:text-base font-semibold py-3 lg:py-2",
           icon: ChartBarIcon,
           current: false,
         },
         {
           name: "Latest news",
           icon: NewspaperIcon,
-          mainClass: "text-sm font-semibold py-3",
+          mainClass: "text-sm lg:text-base font-semibold py-3 lg:py-2",
           current: false,
         },
         {
           name: "Shop",
           icon: ShoppingCartIcon,
-          mainClass: "text-sm font-semibold py-3",
+          mainClass: "text-sm lg:text-base font-semibold py-3 lg:py-2",
           current: false,
         },
         {
           name: "Help",
           icon: QuestionMarkCircleIcon,
-          mainClass: "text-sm font-semibold py-3",
+          mainClass: "text-sm lg:text-base font-semibold py-3 lg:py-2",
           current: false,
           children: [
             {
@@ -1096,14 +1102,16 @@ export default {
         {
           name: "Home",
           icon: HomeIcon,
-          mainClass: "border-b border-gray-50 text-lg font-light py-2.5",
+          mainClass:
+            "border-b border-gray-50 text-lg lg:text-2xl font-light py-2.5",
           current: true,
           href: "#",
         },
         {
           name: "Send",
           icon: TruckIcon,
-          mainClass: "border-b border-gray-50 text-lg font-light py-2.5",
+          mainClass:
+            "border-b border-gray-50 text-lg lg:text-2xl font-light py-2.5",
           current: false,
           children: [
             { name: "Overview", href: "#" },
@@ -1115,54 +1123,58 @@ export default {
         {
           name: "e-Commerce",
           icon: FolderIcon,
-          mainClass: "border-b border-gray-50 text-lg font-light py-2.5",
+          mainClass:
+            "border-b border-gray-50 text-lg lg:text-2xl font-light py-2.5",
           current: false,
           children: [{ name: "Overview", href: "#" }],
         },
         {
           name: "Marketing",
           icon: CalendarIcon,
-          mainClass: "border-b border-gray-50 text-lg font-light py-2.5",
+          mainClass:
+            "border-b border-gray-50 text-lg lg:text-2xl font-light py-2.5",
           current: false,
           children: [{ name: "Overview", href: "#" }],
         },
         {
           name: "Physical and digital communications",
           icon: InboxIcon,
-          mainClass: "border-b border-gray-50 text-lg font-light py-2.5",
+          mainClass:
+            "border-b border-gray-50 text-lg lg:text-2xl font-light py-2.5",
           current: false,
           children: [{ name: "Overview", href: "#" }],
         },
         {
           name: "For your business",
           icon: ChartBarIcon,
-          mainClass: "border-b border-gray-50 text-lg font-light py-2.5",
+          mainClass:
+            "border-b border-gray-50 text-lg lg:text-2xl font-light py-2.5",
           current: false,
           children: [{ name: "Overview", href: "#" }],
         },
         {
           name: "Tools",
           icon: CogIcon,
-          mainClass: "text-sm font-semibold py-3 mt-7",
+          mainClass: "text-sm lg:text-base font-semibold py-3 lg:py-2 mt-7",
           current: false,
         },
         {
           name: "Latest news",
           icon: NewspaperIcon,
-          mainClass: "text-sm font-semibold py-3",
+          mainClass: "text-sm lg:text-base font-semibold py-3 lg:py-2",
           current: false,
           children: [{ name: "Overview", href: "#" }],
         },
         {
           name: "Shop",
           icon: ShoppingCartIcon,
-          mainClass: "text-sm font-semibold py-3",
+          mainClass: "text-sm lg:text-base font-semibold py-3 lg:py-2",
           current: false,
         },
         {
           name: "Help",
           icon: QuestionMarkCircleIcon,
-          mainClass: "text-sm font-semibold py-3",
+          mainClass: "text-sm lg:text-base font-semibold py-3 lg:py-2",
           current: false,
           children: [
             {
