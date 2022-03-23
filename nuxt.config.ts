@@ -2,10 +2,9 @@ import { defineNuxtConfig } from "nuxt3";
 
 // https://v3.nuxtjs.org/docs/directory-structure/nuxt.config
 export default defineNuxtConfig({
-  ssr: false,
+  ssr: true,
 
   // Target: https://go.nuxtjs.dev/config-target
-  target: "static",
   publicRuntimeConfig: {
       APP_TOKEN: process.env.APP_TOKEN,
       CTF_SPACE_ID: process.env.CTF_SPACE_ID,
@@ -28,7 +27,7 @@ export default defineNuxtConfig({
   },
 
   buildModules: [
-    "@nuxtjs/pwa",
+    // "@nuxtjs/pwa",
     //'@nuxt/image',
   ],
 
@@ -55,7 +54,7 @@ export default defineNuxtConfig({
   },
 
   build: {
-    transpile: ["@heroicons/vue"],
+    transpile: ["@heroicons/vue", "@headlessui/vue"],
     postcss: {
       postcssOptions: {
         plugins: {
