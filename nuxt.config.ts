@@ -4,7 +4,6 @@ import { defineNuxtConfig } from "nuxt3";
 export default defineNuxtConfig({
   ssr: true,
   // Auto import components: https://go.nuxtjs.dev/config-components
-  components: true,
 
   // Target: https://go.nuxtjs.dev/config-target
   publicRuntimeConfig: {
