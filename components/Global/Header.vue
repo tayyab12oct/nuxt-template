@@ -5,37 +5,30 @@
       class="absolute inset-0 shadow-sm bg-white z-50 pointer-events-none"
       aria-hidden="true"
     />
-    <div class="relative z-50 border-t-8 border-secondary overflow-hidden">
+    <div class="relative z-50 border-t-8 border-secondary">
       <div
-        class="max-w-7xl mx-auto flex justify-between items-center px-6 md:py-1 py-2 xl:px-0 md:justify-start md:space-x-5 lg:space-x-8"
+        class="max-w-7xl mx-auto flex justify-between items-center px-6 md:py-0 py-2 xl:px-0 md:justify-start md:space-x-5 lg:space-x-8"
       >
         <div class="flex items-center space-x-4">
           <NuxtLink to="/" class="flex">
             <span class="sr-only">Workflow</span>
-            <img
-              class="h-8 w-auto md:h-9 lg:h-10"
-              src="assets/images/Logo.svg"
-              alt=""
-            />
+            <img class="h-8 w-auto md:h-9 lg:h-10" src="assets/images/Logo.svg" alt="" />
           </NuxtLink>
           <div class="border-l border-gray-100 pl-2">
             <PopoverButton
               @click="openMenu"
               class="bg-white rounded-md lg:p-2 p-1 inline-flex items-center justify-center text-primary focus:outline-none"
             >
-              <MenuIcon
-                v-if="menu === false"
-                class="h-6 w-6"
-                aria-hidden="true"
-              />
+              <MenuIcon v-if="menu === false" class="h-6 w-6" aria-hidden="true" />
               <XIcon v-else class="h-6 w-6" aria-hidden="true" />
             </PopoverButton>
           </div>
         </div>
         <div
+          @click="menu = false"
           class="md:flex-1 md:flex md:items-center md:justify-between md:pl-5 lg:pl-0"
         >
-          <div class="hidden lg:flex lg:space-x-10 space-x-8">
+          <!-- <div class="hidden md:flex lg:space-x-10 space-x-8">
             <NuxtLink
               to="/individual"
               class="text-base border-b border-transparent px-1 py-1.5 text-primary transition-all flex items-center space-x-2"
@@ -48,12 +41,13 @@
             >
               <LocationMarkerIcon class="w-5" /> <span>Company</span>
             </NuxtLink>
-          </div>
+          </div> -->
+          <NavMenu />
           <div class="flex items-center lg:space-x-4 space-x-3">
             <div class="text-right text-gray-300 text-sm hidden lg:block">
               <p class="font-light">
-                Call us Mon. - Fri. from @opening_time_12h - @closing_time_12h
-                ET / Closed Weekends
+                Call us Mon. - Fri. from @opening_time_12h - @closing_time_12h ET / Closed
+                Weekends
               </p>
               <p class="text-secondary">Contact Us</p>
               <h5 class="text-primary text-lg">
@@ -67,10 +61,7 @@
               to=""
               class="cursor-pointer border-l border-gray-100 lg:border-l-0 py-1.5 pl-3 lg:p-0"
             >
-              <UserIcon
-                class="lg:h-6 h-5 lg:w-6 w-5 text-primary"
-                aria-hidden="true"
-              />
+              <UserIcon class="lg:h-6 h-5 lg:w-6 w-5 text-primary" aria-hidden="true" />
             </NuxtLink>
           </div>
         </div>
@@ -85,283 +76,70 @@
       leave-from-class="opacity-100 scale-100"
       leave-to-class="opacity-0 scale-95"
     >
-      <div
-        v-if="menu == true"
-        focus
-        class="fixed left-0 w-full z-30 top-0 inset-x-0 transition transform origin-top-right"
-      >
+      <div v-if="menu == true">
         <div
-          class="h-screen p-6 pb-10 pt-20 lg:pt-28 lg:px-16 flex flex-col justify-between"
-          :class="openTab === 1 ? 'bg-secondary' : 'bg-primary'"
+          @click="openMenu"
+          class="absolute inset-0 z-30 h-screen w-full bg-gray-40"
+          aria-hidden="true"
+        />
+        <div
+          class="fixed left-0 w-full lg:w-[470px] md:w-90 z-30 top-0 inset-x-0 transition transform origin-top-right"
         >
-          <div class="sm:pb-8 text-left">
-            <ul class="flex pt-1 list-none flex-wrap pb-7 space-x-4">
-              <li>
-                <a
-                  class="text-base lg:text-lg cursor-pointer leading-normal pb-2 px-0.5"
-                  v-on:click="toggleTabs(1)"
-                  v-bind:class="{
-                    'text-white': openTab !== 1,
-                    'border-b border-primary border-opacity-30 text-primary font-semibold':
-                      openTab === 1,
-                  }"
-                >
-                  Individual
-                </a>
-              </li>
-              <li>
-                <a
-                  class="text-base lg:text-lg cursor-pointer leading-normal pb-2 px-0.5"
-                  v-on:click="toggleTabs(2)"
-                  v-bind:class="{
-                    'text-primary': openTab !== 2,
-                    'border-b border-gray-100 border-opacity-30 text-white font-semibold':
-                      openTab === 2,
-                  }"
-                >
-                  Company
-                </a>
-              </li>
-            </ul>
-            <nav
-              v-bind:class="{ hidden: openTab !== 1, block: openTab === 1 }"
-              class="flex-1"
-              aria-label="Sidebar"
-            >
-              <template v-for="item in individual" :key="item.name">
-                <div v-if="!item.children" :class="item.mainClass">
-                  <NuxtLink
-                    @click="openMenu"
-                    :to="item.href"
-                    class="group cursor-pointer text-primary w-full flex items-center hover:underline"
-                  >
-                    <div class="w-10">
-                      <component
-                        :is="item.icon"
-                        class="mr-3 flex-shrink-0 h-5 w-5 text-primary"
-                        aria-hidden="true"
-                      />
-                    </div>
-                    {{ item.name }}
-                  </NuxtLink>
-                </div>
-                <Disclosure as="div" v-else v-slot="{ open }">
-                  <DisclosureButton
-                    :class="item.mainClass"
-                    class="group text-primary w-full flex items-center hover:underline"
-                  >
-                    <div class="w-10">
-                      <component
-                        :is="item.icon"
-                        class="mr-3 flex-shrink-0 h-5 w-5 text-primary"
-                        aria-hidden="true"
-                      />
-                    </div>
-                    <span class="flex-1 text-left">
-                      {{ item.name }}
-                    </span>
-                    <ChevronRightIcon
-                      class="flex-shrink-0 h-6 w-6 text-primary"
-                      aria-hidden="true"
-                    />
-                  </DisclosureButton>
-                  <transition
-                    enter-active-class="duration-200 ease-out"
-                    enter-from-class="opacity-0 scale-95"
-                    enter-to-class="opacity-100 scale-100"
-                    leave-active-class="duration-100 ease-in"
-                    leave-from-class="opacity-100 scale-100"
-                    leave-to-class="opacity-0 scale-95"
-                  >
-                    <DisclosurePanel
-                      class="bg-white absolute top-14 lg:top-20 left-2.5 w-full h-screen"
-                    >
-                      <div class="px-6 py-8 pb-18 overflow-y-auto h-full">
-                        <DisclosureButton
-                          class="w-full flex items-center space-x-2 mb-6 text-sm uppercase font-semibold text-primary"
-                        >
-                          <ChevronRightIcon
-                            class="h-6 w-6 text-primary -ml-2 transform rotate-180"
-                            aria-hidden="true"
-                          />
-                          <span>Back</span>
-                        </DisclosureButton>
-                        <DisclosureButton
-                          class="w-full"
-                          v-for="subItem in item.children"
-                          :key="subItem.name"
-                        >
-                          <NuxtLink
-                            v-if="subItem.name"
-                            :to="subItem.href"
-                            class="text-primary hover:underline w-full flex items-center justify-between text-lg font-medium py-3"
-                          >
-                            <span>{{ subItem.name }}</span>
-                            <ChevronRightIcon
-                              class="flex-shrink-0 h-6 w-6 text-primary"
-                              aria-hidden="true"
-                            />
-                          </NuxtLink>
-                          <ul v-for="v in subItem.list" :key="v.name">
-                            <li>
-                              <NuxtLink
-                                :to="v.href"
-                                class="text-primary w-full flex items-center justify-between text-base py-3 font-medium text-left border-t border-gray-900"
-                                :class="v.icon ? 'hover:underline' : ''"
-                              >
-                                <span>{{ v.name }} tect</span>
-                                <ChevronRightIcon
-                                  v-if="v.icon"
-                                  class="flex-shrink-0 h-6 w-6 text-primary"
-                                  aria-hidden="true"
-                                />
-                              </NuxtLink>
-                              <ul>
-                                <li v-for="a in v.subList" :key="a.name">
-                                  <NuxtLink
-                                    :to="a.href"
-                                    class="text-primary hover:underline w-full text-left flex items-center justify-between text-base py-3 font-light"
-                                  >
-                                    <span>{{ a.name }}</span>
-                                  </NuxtLink>
-                                </li>
-                              </ul>
-                            </li>
-                          </ul>
-                        </DisclosureButton>
-                      </div>
-                    </DisclosurePanel>
-                  </transition>
-                </Disclosure>
-              </template>
-            </nav>
-            <nav
-              v-bind:class="{ hidden: openTab !== 2, block: openTab === 2 }"
-              class="flex-1"
-              aria-label="Sidebar"
-            >
-              <template v-for="item in company" :key="item.name">
-                <div v-if="!item.children" :class="item.mainClass">
-                  <NuxtLink
-                    @click="openMenu"
-                    :to="item.href"
-                    class="group cursor-pointer text-white w-full flex items-center hover:underline"
-                  >
-                    <div class="w-10">
-                      <component
-                        :is="item.icon"
-                        class="mr-3 flex-shrink-0 h-5 w-5 text-white"
-                        aria-hidden="true"
-                      />
-                    </div>
-                    {{ item.name }}
-                  </NuxtLink>
-                </div>
-                <Disclosure as="div" v-else v-slot="{ open }">
-                  <DisclosureButton
-                    :class="item.mainClass"
-                    class="group text-white w-full flex items-center hover:underline"
-                  >
-                    <div class="w-10">
-                      <component
-                        :is="item.icon"
-                        class="mr-3 flex-shrink-0 h-5 w-5 text-white"
-                        aria-hidden="true"
-                      />
-                    </div>
-                    <span class="flex-1 text-left">
-                      {{ item.name }}
-                    </span>
-                    <ChevronRightIcon
-                      class="flex-shrink-0 h-6 w-6 text-white"
-                      aria-hidden="true"
-                    />
-                  </DisclosureButton>
-                  <transition
-                    enter-active-class="duration-200 ease-out"
-                    enter-from-class="opacity-0 scale-95"
-                    enter-to-class="opacity-100 scale-100"
-                    leave-active-class="duration-100 ease-in"
-                    leave-from-class="opacity-100 scale-100"
-                    leave-to-class="opacity-0 scale-95"
-                  >
-                    <DisclosurePanel
-                      class="bg-white absolute top-14 lg:top-20 left-2.5 w-full h-screen"
-                    >
-                      <div class="px-6 py-8 pb-18 overflow-y-auto h-full">
-                        <DisclosureButton
-                          class="w-full flex items-center space-x-2 mb-6 text-sm uppercase font-semibold text-primary"
-                        >
-                          <ChevronRightIcon
-                            class="h-6 w-6 text-primary -ml-2 transform rotate-180"
-                            aria-hidden="true"
-                          />
-                          <span>Back</span>
-                        </DisclosureButton>
-                        <DisclosureButton
-                          class="w-full"
-                          v-for="subItem in item.children"
-                          :key="subItem.name"
-                        >
-                          <NuxtLink
-                            v-if="subItem.name"
-                            :to="subItem.href"
-                            class="text-primary hover:underline w-full flex items-center justify-between text-lg font-medium py-3"
-                          >
-                            <span>{{ subItem.name }}</span>
-                            <ChevronRightIcon
-                              class="flex-shrink-0 h-6 w-6 text-primary"
-                              aria-hidden="true"
-                            />
-                          </NuxtLink>
-                          <ul v-for="v in subItem.list" :key="v.name">
-                            <li>
-                              <NuxtLink
-                                :to="v.href"
-                                class="text-primary w-full flex items-center justify-between text-base py-3 font-medium text-left border-t border-gray-900"
-                                :class="v.icon ? 'hover:underline' : ''"
-                              >
-                                <span>{{ v.name }}</span>
-                                <ChevronRightIcon
-                                  v-if="v.icon"
-                                  class="flex-shrink-0 h-6 w-6 text-primary"
-                                  aria-hidden="true"
-                                />
-                              </NuxtLink>
-                              <ul>
-                                <li v-for="a in v.subList" :key="a.name">
-                                  <NuxtLink
-                                    :to="a.href"
-                                    class="text-primary hover:underline w-full text-left flex items-center justify-between text-base py-3 font-light"
-                                  >
-                                    <span>{{ a.name }}</span>
-                                  </NuxtLink>
-                                </li>
-                              </ul>
-                            </li>
-                          </ul>
-                        </DisclosureButton>
-                      </div>
-                    </DisclosurePanel>
-                  </transition>
-                </Disclosure>
-              </template>
-            </nav>
-          </div>
           <div
-            class="font-light mt-auto"
-            :class="openTab === 1 ? 'text-primary' : 'text-white'"
+            class="h-screen p-6 pb-10 pt-20 lg:pt-28 lg:px-16 flex flex-col justify-between"
+            :class="openTab === 1 ? 'bg-secondary' : 'bg-primary'"
           >
-            <h3 class="text-xs">Language:</h3>
-            <ul class="flex items-center space-x-3 pt-2">
-              <li
-                v-for="v in language"
-                :key="v.title"
-                class="text-base hover:underline transition-all cursor-pointer"
-              >
-                {{ v.title }}
-              </li>
-            </ul>
+            <div class="sm:pb-8 text-left">
+              <ul class="flex pt-1 list-none flex-wrap pb-7 space-x-4">
+                <li>
+                  <a
+                    class="text-base lg:text-lg cursor-pointer leading-normal pb-2 px-0.5"
+                    v-on:click="toggleTabs(1)"
+                    v-bind:class="{
+                      'text-white': openTab !== 1,
+                      'border-b border-primary border-opacity-30 text-primary font-semibold':
+                        openTab === 1,
+                    }"
+                  >
+                    Individual
+                  </a>
+                </li>
+                <li>
+                  <a
+                    class="text-base lg:text-lg cursor-pointer leading-normal pb-2 px-0.5"
+                    v-on:click="toggleTabs(2)"
+                    v-bind:class="{
+                      'text-primary': openTab !== 2,
+                      'border-b border-gray-100 border-opacity-30 text-white font-semibold':
+                        openTab === 2,
+                    }"
+                  >
+                    Company
+                  </a>
+                </li>
+              </ul>
+              <div v-bind:class="{ hidden: openTab !== 1, block: openTab === 1 }">
+                <Sidebar :data="individual" :click="openMenu" colorClass="text-primary" />
+              </div>
+              <div v-bind:class="{ hidden: openTab !== 2, block: openTab === 2 }">
+                <Sidebar :data="company" :click="openMenu" colorClass="text-white" />
+              </div>
+            </div>
+            <div
+              class="font-light mt-auto"
+              :class="openTab === 1 ? 'text-primary' : 'text-white'"
+            >
+              <h3 class="text-xs">Language:</h3>
+              <ul class="flex items-center space-x-3 pt-2">
+                <li
+                  v-for="v in language"
+                  :key="v.title"
+                  class="text-base hover:underline transition-all cursor-pointer"
+                >
+                  {{ v.title }}
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
@@ -370,6 +148,8 @@
 </template>
 
 <script>
+import NavMenu from "./NavMenu.vue";
+import Sidebar from "./Sidebar.vue";
 import {
   Popover,
   PopoverButton,
@@ -424,6 +204,8 @@ export default {
     QuestionMarkCircleIcon,
     NewspaperIcon,
     LocationMarkerIcon,
+    Sidebar,
+    NavMenu,
   },
   data() {
     return {
@@ -453,16 +235,14 @@ export default {
         {
           name: "Home",
           icon: HomeIcon,
-          mainClass:
-            "border-b border-gray-50 text-lg lg:text-2xl font-light py-2.5",
+          mainClass: "border-b border-gray-50 text-lg lg:text-2xl font-light py-2.5",
           current: true,
           href: "/",
         },
         {
           name: "Receive",
           icon: UsersIcon,
-          mainClass:
-            "border-b border-gray-50 text-lg lg:text-2xl font-light py-2.5",
+          mainClass: "border-b border-gray-50 text-lg lg:text-2xl font-light py-2.5",
           current: false,
           children: [
             {
@@ -552,8 +332,7 @@ export default {
         {
           name: "Send",
           icon: TruckIcon,
-          mainClass:
-            "border-b border-gray-50 text-lg lg:text-2xl font-light py-2.5",
+          mainClass: "border-b border-gray-50 text-lg lg:text-2xl font-light py-2.5",
           current: false,
           children: [
             {
@@ -659,8 +438,7 @@ export default {
         {
           name: "Cash and purchases",
           icon: CalendarIcon,
-          mainClass:
-            "border-b border-gray-50 text-lg lg:text-2xl font-light py-2.5",
+          mainClass: "border-b border-gray-50 text-lg lg:text-2xl font-light py-2.5",
           current: false,
           children: [
             {
@@ -730,8 +508,7 @@ export default {
         {
           name: "Travel, Leisure and Stamp Collecting",
           icon: InboxIcon,
-          mainClass:
-            "border-b border-gray-50 text-lg lg:text-2xl font-light py-2.5",
+          mainClass: "border-b border-gray-50 text-lg lg:text-2xl font-light py-2.5",
           current: false,
           children: [
             {
@@ -778,8 +555,7 @@ export default {
         {
           name: "For citizens",
           icon: ChartBarIcon,
-          mainClass:
-            "border-b border-gray-50 text-lg lg:text-2xl font-light py-2.5",
+          mainClass: "border-b border-gray-50 text-lg lg:text-2xl font-light py-2.5",
           current: false,
           children: [
             {
@@ -1102,16 +878,14 @@ export default {
         {
           name: "Home",
           icon: HomeIcon,
-          mainClass:
-            "border-b border-gray-50 text-lg lg:text-2xl font-light py-2.5",
+          mainClass: "border-b border-gray-50 text-lg lg:text-2xl font-light py-2.5",
           current: true,
           href: "#",
         },
         {
           name: "Send",
           icon: TruckIcon,
-          mainClass:
-            "border-b border-gray-50 text-lg lg:text-2xl font-light py-2.5",
+          mainClass: "border-b border-gray-50 text-lg lg:text-2xl font-light py-2.5",
           current: false,
           children: [
             { name: "Overview", href: "#" },
@@ -1123,32 +897,28 @@ export default {
         {
           name: "e-Commerce",
           icon: FolderIcon,
-          mainClass:
-            "border-b border-gray-50 text-lg lg:text-2xl font-light py-2.5",
+          mainClass: "border-b border-gray-50 text-lg lg:text-2xl font-light py-2.5",
           current: false,
           children: [{ name: "Overview", href: "#" }],
         },
         {
           name: "Marketing",
           icon: CalendarIcon,
-          mainClass:
-            "border-b border-gray-50 text-lg lg:text-2xl font-light py-2.5",
+          mainClass: "border-b border-gray-50 text-lg lg:text-2xl font-light py-2.5",
           current: false,
           children: [{ name: "Overview", href: "#" }],
         },
         {
           name: "Physical and digital communications",
           icon: InboxIcon,
-          mainClass:
-            "border-b border-gray-50 text-lg lg:text-2xl font-light py-2.5",
+          mainClass: "border-b border-gray-50 text-lg lg:text-2xl font-light py-2.5",
           current: false,
           children: [{ name: "Overview", href: "#" }],
         },
         {
           name: "For your business",
           icon: ChartBarIcon,
-          mainClass:
-            "border-b border-gray-50 text-lg lg:text-2xl font-light py-2.5",
+          mainClass: "border-b border-gray-50 text-lg lg:text-2xl font-light py-2.5",
           current: false,
           children: [{ name: "Overview", href: "#" }],
         },
