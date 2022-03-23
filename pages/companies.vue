@@ -242,7 +242,7 @@
     >
       <div class="md:col-span-2 p-10 lg:p-0">
         <img
-          src="@/assets/images/enviar_caja isotérmica.svg"
+          src="@/assets/images/enviar.svg"
           class="w-full"
           alt=""
         />
