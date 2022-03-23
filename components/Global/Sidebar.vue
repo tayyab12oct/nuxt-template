@@ -18,8 +18,8 @@
         {{ item.name }}
       </NuxtLink>
     </div>
-    <Disclosure as="div" v-else v-slot="{ open }">
-      <DisclosureButton
+    <Popover as="div" v-else>
+      <PopoverButton
         :class="`${item.mainClass} ${colorClass}`"
         class="group w-full flex items-center hover:underline"
       >
@@ -39,7 +39,7 @@
           :class="colorClass"
           aria-hidden="true"
         />
-      </DisclosureButton>
+      </PopoverButton>
       <transition
         enter-active-class="duration-200 ease-out"
         enter-from-class="opacity-0 scale-95"
@@ -48,11 +48,11 @@
         leave-from-class="opacity-100 scale-100"
         leave-to-class="opacity-0 scale-95"
       >
-        <DisclosurePanel
+        <PopoverPanel
           class="bg-white absolute top-14 md:top-12 lg:top-20 left-2.5 md:left-full lg:left-[470px] w-full md:w-[407px] lg:w-full md:right-0 h-screen"
         >
           <div class="px-6 py-8 lg:px-16 lg:pb-26 pb-18 overflow-y-auto h-full">
-            <DisclosureButton
+            <PopoverButton
               class="w-full flex items-center space-x-2 mb-6 text-sm uppercase font-semibold text-primary"
             >
               <ChevronRightIcon
@@ -60,8 +60,8 @@
                 aria-hidden="true"
               />
               <span>Back</span>
-            </DisclosureButton>
-            <DisclosureButton
+            </PopoverButton>
+            <PopoverButton
               class="w-full"
               v-for="subItem in item.children"
               :key="subItem.name"
@@ -104,20 +104,22 @@
                   </ul>
                 </li>
               </ul>
-            </DisclosureButton>
+            </PopoverButton>
           </div>
-        </DisclosurePanel>
+        </PopoverPanel>
       </transition>
-    </Disclosure>
+    </Popover>
   </template>
 </template>
 <script>
-import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/vue";
+import { Popover,PopoverButton,PopoverPanel, DisclosureButton, DisclosurePanel } from "@headlessui/vue";
 import { ChevronRightIcon } from "@heroicons/vue/solid";
 export default {
   props: ["data", "click", "colorClass"],
   components: {
-    Disclosure,
+    Popover,
+    PopoverButton,
+    PopoverPanel,
     DisclosureButton,
     DisclosurePanel,
     ChevronRightIcon,
