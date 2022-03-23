@@ -31,7 +31,7 @@
               ? 'bg-secondary text-primary'
               : 'bg-primary text-white'
           "
-          class="dropdown-menu absolute top-full w-full right-0 left-0 hidden h-auto group-hover:flex"
+          class="dropdown-menu absolute top-full px-6 md:px-0 lg:px-0 w-full right-0 left-0 hidden h-auto group-hover:flex"
         >
           <ul
             role="list"

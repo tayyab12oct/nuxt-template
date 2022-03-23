@@ -76,17 +76,17 @@
       leave-from-class="opacity-100 scale-100"
       leave-to-class="opacity-0 scale-95"
     >
-      <div v-if="menu == true">
+      <div class="absolute top-0 left-0 w-full h-screen" v-if="menu == true">
         <div
           @click="openMenu"
           class="absolute inset-0 z-30 h-screen w-full bg-gray-40"
           aria-hidden="true"
         />
         <div
-          class="fixed left-0 w-full lg:w-[470px] md:w-90 z-30 top-0 inset-x-0 transition transform origin-top-right"
+          class="relative w-full lg:w-[470px] md:w-90 z-40 inset-x-0 transition transform"
         >
           <div
-            class="h-screen p-6 pb-10 pt-20 lg:pt-28 lg:px-16 flex flex-col justify-between"
+            class="h-screen overflow-y-auto p-6 pb-10 lg:px-16 lg:pt-28 pt-18 flex flex-col justify-between"
             :class="openTab === 1 ? 'bg-secondary' : 'bg-primary'"
           >
             <div class="sm:pb-8 text-left">

@@ -3,6 +3,7 @@ import { defineNuxtConfig } from "nuxt3";
 // https://v3.nuxtjs.org/docs/directory-structure/nuxt.config
 export default defineNuxtConfig({
   ssr: true,
+  target: "static",
 
   // Target: https://go.nuxtjs.dev/config-target
   publicRuntimeConfig: {
